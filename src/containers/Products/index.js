@@ -15,7 +15,6 @@ import ProductsBox from './ProductsBox';
 class Products extends React.PureComponent {
   componentDidMount() {
     this.props.defaultTypeAction();
-    console.log(this.props.match.params.product);
   }
 
   render() {

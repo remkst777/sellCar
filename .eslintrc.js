@@ -32,8 +32,8 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',
 
-    'no-console': 'error', // airbnb использует предупреждение
-    'no-alert': 'error', // airbnb использует предупреждение
+    'no-console': 'off', // airbnb использует предупреждение
+    'no-alert': 'off', // airbnb использует предупреждение
 
     'no-param-reassign': 'off',
     radix: 'off',

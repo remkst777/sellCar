@@ -1,6 +1,8 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Warning = styled.h6`
+const WarningStyled = styled.h6`
   font-size: 11px;
   color: #ff0000;
   padding: 5px;
@@ -19,5 +21,16 @@ const Warning = styled.h6`
     }
   }
 `;
+
+const Warning = ({ touched, error, warning }) =>
+  touched && (error || warning) ? (
+    <WarningStyled>{error || warning}</WarningStyled>
+  ) : null;
+
+Warning.propTypes = {
+  touched: PropTypes.bool,
+  error: PropTypes.string,
+  warning: PropTypes.string,
+};
 
 export default Warning;

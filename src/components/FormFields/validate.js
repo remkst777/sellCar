@@ -3,7 +3,7 @@ const imageValidation = value =>
 
 const stringLength = (min, max) => value =>
   value && (value.length > max || value.length < min)
-    ? 'Wrong field length'
+    ? `Field length has to be between ${min} and ${max}`
     : undefined;
 
 /* eslint no-useless-escape: 0 */
@@ -14,12 +14,12 @@ const validateEmail = email => {
 
 const required = value => (!value ? 'Required field' : undefined);
 
-const strLength20x100 = stringLength(20, 100);
+const strLength5x20 = stringLength(5, 20);
 
 export {
   imageValidation,
   stringLength,
   validateEmail,
   required,
-  strLength20x100,
+  strLength5x20,
 };

@@ -6,8 +6,10 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 
+import AppRouting from 'components/AppRouting';
+import AccountProvider from 'containers/AccountProvider';
+
 import configureStore from './configureStore';
-import AppRouting from './components/AppRouting';
 
 import './reset-styles.css';
 import './global-styles.css';
@@ -18,7 +20,9 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <AppRouting />
+    <AccountProvider>
+      <AppRouting />
+    </AccountProvider>
   </Provider>,
   document.getElementById('root'),
 );

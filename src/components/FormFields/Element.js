@@ -9,8 +9,8 @@ const properties = {
   },
 };
 
+const red = '#6f42c1';
 const blue = '#2196f3';
-const gray = '#e0e0e0';
 
 const Element = size => `
   width: 100%;
@@ -25,8 +25,8 @@ const Element = size => `
   height: ${properties[size].height};
 
   :focus {
-    border: 1px solid ${gray};
-    color: ${gray};
+    border: 1px solid ${red};
+    color: ${red};
   }
 
   :disabled {

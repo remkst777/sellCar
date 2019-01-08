@@ -9,10 +9,10 @@ const Box = styled.div`
   }
 `;
 
-const Button = ({ type, size, name, disabled, className }) => {
+const Button = ({ type, size, name, disabled, className, onClick }) => {
   return (
     <Box className={className} size={size}>
-      <button type={type} disabled={disabled}>
+      <button type={type} disabled={disabled} onClick={onClick}>
         {name}
       </button>
     </Box>
@@ -25,6 +25,7 @@ Button.propTypes = {
   size: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default Button;

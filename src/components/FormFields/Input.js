@@ -5,6 +5,7 @@ import Element from './Element';
 import Warning from './Warning';
 
 const Box = styled.div`
+  margin-bottom: 12px;
   input {
     ${props => Element(props.size)};
   }
@@ -16,18 +17,19 @@ const Input = ({
   disabled,
   placeholder,
   size,
-  meta: { touched, error, warning },
+  type,
+  meta,
 }) => {
   return (
     <Box className={className} size={size}>
       <input
         {...input}
         disabled={disabled}
-        type="text"
+        type={type || 'text'}
         autoComplete="off"
         placeholder={placeholder}
       />
-      {touched && (error || warning) && <Warning>{error || warning}</Warning>}
+      <Warning {...meta} />
     </Box>
   );
 };
