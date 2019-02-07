@@ -55,6 +55,8 @@ LoginForm.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
-export default reduxForm({
-  form: 'LoginForm',
-})(LoginForm);
+export default React.memo(
+  reduxForm({
+    form: 'LoginForm',
+  })(LoginForm),
+);

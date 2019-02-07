@@ -98,4 +98,4 @@ SelectField.propTypes = {
   disabled: PropTypes.bool,
 };
 
-export default SelectField;
+export default React.memo(SelectField);

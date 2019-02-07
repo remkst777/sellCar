@@ -8,4 +8,4 @@ const HeaderNOTAuth = ({ username }) => [
   </li>,
 ];
 
-export default HeaderNOTAuth;
+export default React.memo(HeaderNOTAuth);

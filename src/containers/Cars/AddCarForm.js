@@ -228,4 +228,4 @@ AddCarForm = connect(state => {
   };
 })(AddCarForm);
 
-export default AddCarForm;
+export default React.memo(AddCarForm);

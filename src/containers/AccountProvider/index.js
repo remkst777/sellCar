@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { getOptionList } from 'containers/Cars/actions';
 import { getUserData } from './actions';
 
-class AccountProvider extends React.Component {
+class AccountProvider extends React.PureComponent {
   componentDidMount() {
     // TODO: check - it works slowly
     this.props.getUserDataDispatch();

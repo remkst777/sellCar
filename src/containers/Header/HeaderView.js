@@ -47,4 +47,4 @@ HeaderView.propTypes = {
   userData: PropTypes.object,
 };
 
-export default HeaderView;
+export default React.memo(HeaderView);

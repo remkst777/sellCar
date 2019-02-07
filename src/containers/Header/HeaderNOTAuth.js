@@ -11,4 +11,4 @@ const HeaderNOTAuth = ({ showModal }) => [
   </li>,
 ];
 
-export default HeaderNOTAuth;
+export default React.memo(HeaderNOTAuth);

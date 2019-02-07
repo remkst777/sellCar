@@ -59,4 +59,4 @@ Sorter.propTypes = {
   sortName: PropTypes.string,
 };
 
-export default Sorting;
+export default React.memo(Sorting);

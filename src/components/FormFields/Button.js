@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import Element from './Element';
 
 const Box = styled.div`
@@ -36,4 +37,4 @@ Button.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default Button;
+export default React.memo(Button);

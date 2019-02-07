@@ -13,4 +13,4 @@ const FileInput = ({ input, size, placeholder, className, meta, disabled }) => (
   </div>
 );
 
-export default FileInput;
+export default React.memo(FileInput);

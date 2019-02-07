@@ -59,4 +59,4 @@ CarsList.propTypes = {
   isLast: PropTypes.bool,
 };
 
-export default CarsList;
+export default React.memo(CarsList);

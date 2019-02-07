@@ -33,4 +33,4 @@ Warning.propTypes = {
   warning: PropTypes.string,
 };
 
-export default Warning;
+export default React.memo(Warning);

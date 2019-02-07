@@ -69,6 +69,8 @@ SignUpForm.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
-export default reduxForm({
-  form: 'SignUpForm',
-})(SignUpForm);
+export default React.memo(
+  reduxForm({
+    form: 'SignUpForm',
+  })(SignUpForm),
+);

@@ -27,4 +27,4 @@ ProfileView.propTypes = {
   loadingLogout: PropTypes.bool.isRequired,
 };
 
-export default ProfileView;
+export default React.memo(ProfileView);

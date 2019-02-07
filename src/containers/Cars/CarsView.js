@@ -78,4 +78,4 @@ CarsView.propTypes = {
   loadNextCars: PropTypes.func,
 };
 
-export default CarsView;
+export default React.memo(CarsView);

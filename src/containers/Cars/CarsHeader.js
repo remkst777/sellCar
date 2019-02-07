@@ -12,4 +12,4 @@ ProductsHeader.propTypes = {
   showAddAutoModal: PropTypes.func,
 };
 
-export default ProductsHeader;
+export default React.memo(ProductsHeader);

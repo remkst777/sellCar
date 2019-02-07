@@ -14,4 +14,4 @@ Loader.propTypes = {
   size: PropTypes.string.isRequired,
 };
 
-export default Loader;
+export default React.memo(Loader);

@@ -228,4 +228,4 @@ FilterCarsForm = connect((state, props) => {
   };
 })(FilterCarsForm);
 
-export default FilterCarsForm;
+export default React.memo(FilterCarsForm);
