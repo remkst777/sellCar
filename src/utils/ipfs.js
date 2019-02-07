@@ -20,3 +20,9 @@ export async function getText(hash) {
   const getResult = await getIpfsApi().get(hash);
   return getResult[0].content.toString('utf8');
 }
+
+export async function saveImage(file) {
+  const buffer = Buffer.from(file);
+  const resp = await getIpfsApi().add(buffer);
+  return resp[0].hash;
+}

@@ -1,4 +1,4 @@
-const properties = {
+export const properties = {
   lg: {
     fontSize: '16px',
     height: '48px',
@@ -9,8 +9,8 @@ const properties = {
   },
 };
 
-const red = '#6f42c1';
-const blue = '#2196f3';
+export const red = '#6f42c1';
+export const blue = '#2196f3';
 
 const Element = size => `
   width: 100%;
@@ -23,6 +23,10 @@ const Element = size => `
   transition: 0.35s;
   font-size: ${properties[size].fontSize};
   height: ${properties[size].height};
+
+  ::placeholder {
+    color: ${blue}7F;
+  }
 
   :focus {
     border: 1px solid ${red};

@@ -7,6 +7,7 @@ const passport = require('passport');
 
 // Routing
 const UsersRoute = require('./routes/usersRoute');
+const AutoRoute = require('./routes/autoRoute');
 
 const PORT = 5000;
 const DB_CONNECTION =
@@ -57,6 +58,8 @@ app.use(
   }),
 );
 
+// TODO: access control (IP)
+
 // Passport Config
 require('./config/passport')(passport);
 
@@ -67,6 +70,7 @@ app.use(passport.session());
 
 // Route Files
 app.use(UsersRoute);
+app.use(AutoRoute);
 
 // Start Server
 app.listen(PORT);

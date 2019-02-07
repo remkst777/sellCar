@@ -9,10 +9,18 @@ const Box = styled.div`
   }
 `;
 
-const Button = ({ type, size, name, disabled, className, onClick }) => {
+const Button = ({
+  type,
+  size,
+  name,
+  disabled,
+  className,
+  onClick,
+  dataset,
+}) => {
   return (
     <Box className={className} size={size}>
-      <button type={type} disabled={disabled} onClick={onClick}>
+      <button {...dataset} type={type} disabled={disabled} onClick={onClick}>
         {name}
       </button>
     </Box>

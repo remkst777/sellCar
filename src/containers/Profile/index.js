@@ -18,7 +18,7 @@ class Profile extends React.PureComponent {
     const { userData, userDataLoading } = this.props;
 
     if (!userDataLoading && !userData) {
-      this.props.history.push(routes.homepage());
+      this.props.history.push(routes.homepage);
       showToast('error', 'Not authorized');
     }
   }

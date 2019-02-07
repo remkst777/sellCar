@@ -16,7 +16,7 @@ export function logout(history) {
 
       await logoutUtil();
 
-      await history.push(routes.homepage());
+      await history.push(routes.homepage);
 
       dispatch({
         type: GET_USER_DATA_SUCCESS,

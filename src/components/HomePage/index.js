@@ -3,17 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
-import * as routes from 'routes-config';
+import { bmw, ferrari, vw, audi, mercedes, anotherCar } from 'routes-config';
+
 import { confirmEmail } from 'utils/accountManagement';
-
 import { Box, Item } from './Box';
-
-const routeAuto = routes.products('auto');
-const routeParts = routes.products('parts');
-const routeTires = routes.products('tires');
-const routeOil = routes.products('oil');
-const routeAcces = routes.products('accessories');
-const routeOther = routes.products('');
 
 class HomePage extends React.PureComponent {
   componentDidMount() {
@@ -34,65 +27,72 @@ class HomePage extends React.PureComponent {
 
         <Box>
           <Item slide={0}>
-            <Link to={routeAuto}>
+            <Link to={bmw}>
               <div>
-                <h5>Auto</h5>
+                <h5>BMW</h5>
                 <p>
-                  Great assortment of cars from Europe and America. New Brands
-                  from China.
+                  BMW is a German multinational company which currently produces
+                  luxury automobiles and motorcycles, and also produced aircraft
+                  engines until 1945.
                 </p>
               </div>
             </Link>
           </Item>
           <Item slide={1}>
-            <Link to={routeParts}>
+            <Link to={ferrari}>
               <div>
-                <h5>Parts</h5>
+                <h5>FERRARI</h5>
                 <p>
-                  All necessary spare parts for foreign cars are presented in
-                  our catalog. With the help of our catalog you will quickly
-                  find what you are looking for.
+                  Ferrari is an Italian luxury sports car manufacturer based in
+                  Maranello. Founded by Enzo Ferrari in 1939 out of Alfa Romeo
+                  race division as Auto Avio Costruzioni, the company built its
+                  first car in 1940.
                 </p>
               </div>
             </Link>
           </Item>
           <Item slide={2}>
-            <Link to={routeTires}>
+            <Link to={vw}>
               <div>
-                <h5>Tires</h5>
+                <h5>Volkswagen</h5>
                 <p>
-                  We sell car tires in the capital and other regions of the
-                  country at the most affordable prices.
+                  Volkswagen is a German automaker founded on 28 May 1937 by the
+                  German Labour Front under Adolf Hitler and headquartered in
+                  Wolfsburg. It is the flagship marque of the Volkswagen Group,
+                  the largest automaker by worldwide sales in 2016 and 2017.
                 </p>
               </div>
             </Link>
           </Item>
           <Item slide={3}>
-            <Link to={routeOil}>
+            <Link to={audi}>
               <div>
-                <h5>Oil</h5>
+                <h5>Audi</h5>
                 <p>
-                  High-quality engine oil - a guarantee of long and trouble-free
-                  operation of the engine. It consists of refined petroleum
-                  products and certain additives.
+                  Audi is a German automobile manufacturer that designs,
+                  engineers, produces, markets and distributes luxury vehicles.
+                  Audi is a member of the Volkswagen Group and has its roots at
+                  Ingolstadt, Bavaria, Germany. Audi-branded vehicles are
+                  produced in nine production facilities worldwide.
                 </p>
               </div>
             </Link>
           </Item>
           <Item slide={4}>
-            <Link to={routeAcces}>
+            <Link to={mercedes}>
               <div>
-                <h5>Accessories</h5>
+                <h5>Mercedes</h5>
                 <p>
-                  Huge selection of car accessories and parts. Free shipping
-                  from China! Everything for your car. Convenient and easy
-                  search on the site. Fast shipping!
+                  Mercedes-Benz is a German global automobile marque and a
+                  division of Daimler AG. The brand is known for luxury
+                  vehicles, buses, coaches, and lorries. The headquarters is in
+                  Stuttgart, Baden-Württemberg.
                 </p>
               </div>
             </Link>
           </Item>
           <Item slide={5}>
-            <Link to={routeOther}>
+            <Link to={anotherCar}>
               <div>
                 <h5>Other</h5>
                 <p>Click to know more about our products.</p>

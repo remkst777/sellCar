@@ -13,7 +13,7 @@ const sendEmail = (req, res, email, message) => {
     service: 'Gmail',
     auth: {
       user: 'romanrem888@gmail.com',
-      pass: 'r123123r',
+      pass: '!!!qqq123',
     },
   });
 
@@ -193,9 +193,7 @@ router.post('/recover-password', (req, res) => {
 
     if (!data[0]) return res.status(403).send({ message: 'No such user' });
 
-    const newPassword = Math.random()
-      .toString()
-      .slice(2, 8);
+    const newPassword = `${Math.random()}`.slice(2, 8);
 
     bcrypt.genSalt(SALT_PARAM_1, (err, salt) => {
       bcrypt.hash(newPassword, salt, (err, hash) => {

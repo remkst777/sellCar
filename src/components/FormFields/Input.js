@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Element from './Element';
 import Warning from './Warning';
+import Label from './Label';
 
 const Box = styled.div`
   margin-bottom: 12px;
@@ -19,9 +20,11 @@ const Input = ({
   size,
   type,
   meta,
+  label,
 }) => {
   return (
     <Box className={className} size={size}>
+      {label && <Label>{label}</Label>}
       <input
         {...input}
         disabled={disabled}

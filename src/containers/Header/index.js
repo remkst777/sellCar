@@ -8,31 +8,14 @@ import { select as accountProviderSelect } from 'containers/AccountProvider/sele
 
 import HeaderView from './HeaderView';
 
-class Header extends React.Component {
-  state = {
-    isFormShowed: false,
-  };
-
-  showForm = () => {
-    this.setState({ isFormShowed: !this.state.isFormShowed });
-  };
-
+class Header extends React.PureComponent {
   showModal = e => {
-    const { modaltype } = e.target.dataset;
-    showModal(modaltype);
+    showModal(e.target.dataset.modaltype);
   };
 
   render() {
-    const { userData } = this.props;
-
     return (
-      <HeaderView
-        submitSearch={() => true}
-        isFormShowed={this.state.isFormShowed}
-        userData={userData}
-        showModal={this.showModal}
-        showForm={this.showForm}
-      />
+      <HeaderView userData={this.props.userData} showModal={this.showModal} />
     );
   }
 }

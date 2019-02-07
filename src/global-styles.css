@@ -23,8 +23,18 @@ a:hover {
   color: inherit;
 }
 
-a, button, badge {
+a,
+button,
+badge {
   cursor: pointer;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 badge {
@@ -51,7 +61,8 @@ h5 {
   font-size: 16px;
 }
 
-p, span {
+p,
+span {
   font-size: 14px;
   line-height: 20px;
 }
