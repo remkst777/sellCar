@@ -6,19 +6,26 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 const UsersModel = require('../models/usersModel');
 
-const SALT_PARAM_1 = 10;
+const {
+  MESSAGES,
+  USERS_MODEL_FIELDS,
+  SALT_PARAM_1,
+  MAIL_SERVICE,
+  MAIL_SERVICE_USER,
+  MAIL_SERVICE_PASSWORD,
+} = require('../constants');
 
 const sendEmail = (req, res, email, message) => {
   const transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    service: MAIL_SERVICE,
     auth: {
-      user: 'romanrem888@gmail.com',
-      pass: '!!!qqq123',
+      user: MAIL_SERVICE_USER,
+      pass: MAIL_SERVICE_PASSWORD,
     },
   });
 
   transporter.sendMail({
-    from: 'Mail service',
+    from: MAIL_SERVICE,
     to: email,
     subject: message.subject,
     html: message.html,
@@ -30,68 +37,69 @@ const sendEmail = (req, res, email, message) => {
 router.post('/registr', (req, res, next) => {
   const newUser = new UsersModel(req.body);
 
-  req.checkBody('email').notEmpty();
-  req.checkBody('email').isEmail();
-  req.checkBody('username').notEmpty();
-  req.checkBody('username').isLength({ min: 5, max: 20 });
-  req.checkBody('password').notEmpty();
-  req.checkBody('password').isLength({ min: 5, max: 20 });
+  req.checkBody(USERS_MODEL_FIELDS.EMAIL).notEmpty();
+  req.checkBody(USERS_MODEL_FIELDS.EMAIL).isEmail();
+  req.checkBody(USERS_MODEL_FIELDS.USERNAME).notEmpty();
+  req.checkBody(USERS_MODEL_FIELDS.USERNAME).isLength({ min: 5, max: 20 });
+  req.checkBody(USERS_MODEL_FIELDS.PASSWORD).notEmpty();
+  req.checkBody(USERS_MODEL_FIELDS.PASSWORD).isLength({ min: 5, max: 20 });
 
   const validationErrors = req.validationErrors();
 
   if (validationErrors)
-    return res.status(400).send({ message: 'Field validation is failed' });
+    return res.status(400).send({ message: MESSAGES.FIELD_VALIDATION_FAILED });
 
-  UsersModel.find({ email: req.body.email }, (err, data) => {
-    if (data[0] && !data[0].isVerified)
-      return res
-        .status(400)
-        .send({ message: 'You were registred early. Confirm email.' });
+  UsersModel.find(
+    { [USERS_MODEL_FIELDS.EMAIL]: req.body[USERS_MODEL_FIELDS.EMAIL] },
+    (err, data) => {
+      if (data[0] && !data[0][USERS_MODEL_FIELDS.ISVERIFIED])
+        return res.status(400).send({ message: MESSAGES.ALREADY_REGISTRED });
 
-    if (err || data[0])
-      return res.status(400).send({ message: 'Such user already exists' });
+      if (err || data[0])
+        return res.status(400).send({ message: MESSAGES.USER_EXISTS });
 
-    bcrypt.genSalt(SALT_PARAM_1, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        newUser.password = hash;
-        newUser.save((err, user) => {
-          if (err) return res.status(500).send({ message: 'Server error' });
+      bcrypt.genSalt(SALT_PARAM_1, (err, salt) => {
+        bcrypt.hash(newUser[USERS_MODEL_FIELDS.PASSWORD], salt, (err, hash) => {
+          newUser[USERS_MODEL_FIELDS.PASSWORD] = hash;
+          newUser.save((err, user) => {
+            if (err)
+              return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
 
-          const host = `${req.headers['x-forwarded-proto']}://${
-            req.headers['x-forwarded-host']
-          }`;
+            const host = `${req.headers['x-forwarded-proto']}://${
+              req.headers['x-forwarded-host']
+            }`;
 
-          const message = {
-            text: 'Letter has been sent. You should confirm your email.',
-            subject: 'Continue registration',
-            html: `<a href="${host}/registr/${
-              user.id
-            }">Click here to continue registration</a>`,
-          };
+            const message = {
+              text: MESSAGES.LETTER_SENT,
+              subject: 'Continue registration',
+              html: `<a href="${host}/registr/${
+                user.id
+              }">Click here to continue registration</a>`,
+            };
 
-          return sendEmail(req, res, user.email, message);
+            return sendEmail(req, res, user[USERS_MODEL_FIELDS.EMAIL], message);
+          });
         });
       });
-    });
-  });
+    },
+  );
 });
 
 router.get('/registr/:token', (req, res) => {
   const { token } = req.params;
 
   UsersModel.findById(token, (err, user) => {
-    if (err || !user) return res.status(400).send({ message: 'Bad request' });
+    if (err || !user)
+      return res.status(400).send({ message: MESSAGES.BAD_REQUEST });
 
-    if (user.isVerified)
-      return res
-        .status(400)
-        .send({ message: 'You have already confirmed your email' });
+    if (user[USERS_MODEL_FIELDS.ISVERIFIED])
+      return res.status(400).send({ message: MESSAGES.ALREADY_CONFIRMED });
 
-    user.isVerified = true;
+    user[USERS_MODEL_FIELDS.ISVERIFIED] = true;
     user.save((err, updatedUser) => {
-      if (err) return res.status(500).send({ message: 'Server error' });
+      if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
 
-      return res.status(200).send({ message: 'Success' });
+      return res.status(200).send({ message: MESSAGES.SUCCESS });
     });
   });
 });
@@ -102,19 +110,17 @@ router.get('/send-verification-email', (req, res) => {
   }`;
 
   if (!req.user)
-    return res
-      .status(401)
-      .send({ message: 'You should send your email first' });
+    return res.status(401).send({ message: MESSAGES.SEND_EMAIL_FIRST });
 
   const message = {
-    text: 'Letter has been sent. You should confirm your email.',
+    text: MESSAGES.LETTER_SENT,
     subject: 'Continue registration',
     html: `<a href="${host}/registr/${
       req.user.id
     }">Click here to continue registration</a>`,
   };
 
-  return sendEmail(req, res, req.user.email, message);
+  return sendEmail(req, res, req.user[USERS_MODEL_FIELDS.EMAIL], message);
 });
 
 router.post('/login', (req, res, next) => {
@@ -124,14 +130,12 @@ router.post('/login', (req, res, next) => {
     req.logIn(user, err => {
       if (err) return res.status(401).send({ message: err });
 
-      if (!user.isVerified)
-        return res
-          .status(401)
-          .send({ message: 'You need to confirm your email' });
+      if (!user[USERS_MODEL_FIELDS.ISVERIFIED])
+        return res.status(401).send({ message: MESSAGES.CONFIRM_EMAIL });
 
       return res.status(200).send({
-        username: user.username,
-        email: user.email,
+        username: user[USERS_MODEL_FIELDS.USERNAME],
+        email: user[USERS_MODEL_FIELDS.EMAIL],
         id: user.id,
       });
     });
@@ -139,100 +143,124 @@ router.post('/login', (req, res, next) => {
 });
 
 router.post('/change-password', (req, res, next) => {
-  req.checkBody('email').notEmpty();
-  req.checkBody('email').isEmail();
-  req.checkBody('password').notEmpty();
-  req.checkBody('password2').notEmpty();
-  req.checkBody('password2').isLength({ min: 5, max: 20 });
+  req.checkBody(USERS_MODEL_FIELDS.EMAIL).notEmpty();
+  req.checkBody(USERS_MODEL_FIELDS.EMAIL).isEmail();
+  req.checkBody(USERS_MODEL_FIELDS.PASSWORD).notEmpty();
+  req.checkBody(`${USERS_MODEL_FIELDS.PASSWORD}2`).notEmpty();
+  req
+    .checkBody(`${USERS_MODEL_FIELDS.PASSWORD}2`)
+    .isLength({ min: 5, max: 20 });
 
   const validationErrors = req.validationErrors();
 
   if (validationErrors)
-    return res.status(400).send({ message: 'Field validation is failed' });
+    return res.status(400).send({ message: MESSAGES.FIELD_VALIDATION_FAILED });
 
-  if (!req.user) return res.status(401).send({ message: 'Not authorized' });
+  if (!req.user)
+    return res.status(401).send({ message: MESSAGES.NOT_AUTHORIZED });
 
-  bcrypt.compare(req.body.password, req.user.password, (err, isMatch) => {
-    if (err) return res.status(500).send({ message: err });
+  bcrypt.compare(
+    req.body[USERS_MODEL_FIELDS.PASSWORD],
+    req.user[USERS_MODEL_FIELDS.PASSWORD],
+    (err, isMatch) => {
+      if (err) return res.status(500).send({ message: err });
 
-    if (isMatch) {
-      return UsersModel.find({ email: req.body.email }, (err, data) => {
-        if (!data[0]) return res.status(403).send({ message: 'No such user' });
+      if (isMatch) {
+        return UsersModel.find(
+          { [USERS_MODEL_FIELDS.EMAIL]: req.body[USERS_MODEL_FIELDS.EMAIL] },
+          (err, data) => {
+            if (!data[0])
+              return res.status(403).send({ message: MESSAGES.NO_SUCH_USER });
 
-        bcrypt.genSalt(SALT_PARAM_1, (err, salt) => {
-          if (err) return res.status(500).send({ message: err });
-
-          bcrypt.hash(req.body.password2, salt, (err, hash) => {
-            if (err) return res.status(500).send({ message: err });
-
-            data[0].password = hash;
-            data[0].save((err, updatedUser) => {
+            bcrypt.genSalt(SALT_PARAM_1, (err, salt) => {
               if (err) return res.status(500).send({ message: err });
-              return res.status(200).send({ message: 'Success' });
-            });
-          });
-        });
-      });
-    }
 
-    return res.status(400).send({ message: 'Wrong password' });
-  });
+              bcrypt.hash(
+                req.body[`${USERS_MODEL_FIELDS.PASSWORD}2`],
+                salt,
+                (err, hash) => {
+                  if (err) return res.status(500).send({ message: err });
+
+                  data[0][USERS_MODEL_FIELDS.PASSWORD] = hash;
+                  data[0].save((err, updatedUser) => {
+                    if (err) return res.status(500).send({ message: err });
+                    return res.status(200).send({ message: MESSAGES.SUCCESS });
+                  });
+                },
+              );
+            });
+          },
+        );
+      }
+
+      return res.status(400).send({ message: MESSAGES.WRONG_PASSWORD });
+    },
+  );
 });
 
 router.post('/recover-password', (req, res) => {
-  req.checkBody('email').notEmpty();
-  req.checkBody('email').isEmail();
+  req.checkBody(USERS_MODEL_FIELDS.EMAIL).notEmpty();
+  req.checkBody(USERS_MODEL_FIELDS.EMAIL).isEmail();
 
   const validationErrors = req.validationErrors();
 
   if (validationErrors)
-    return res.status(400).send({ message: 'Field validation is failed' });
+    return res.status(400).send({ message: MESSAGES.FIELD_VALIDATION_FAILED });
 
-  UsersModel.find({ email: req.body.email }, (err, data) => {
-    if (err) return res.status(500).send({ message: err });
+  UsersModel.find(
+    { [USERS_MODEL_FIELDS.EMAIL]: req.body[USERS_MODEL_FIELDS.EMAIL] },
+    (err, data) => {
+      if (err) return res.status(500).send({ message: err });
 
-    if (!data[0]) return res.status(403).send({ message: 'No such user' });
+      if (!data[0])
+        return res.status(403).send({ message: MESSAGES.NO_SUCH_USER });
 
-    const newPassword = `${Math.random()}`.slice(2, 8);
+      const newPassword = `${Math.random()}`.slice(2, 8);
 
-    bcrypt.genSalt(SALT_PARAM_1, (err, salt) => {
-      bcrypt.hash(newPassword, salt, (err, hash) => {
-        if (err) return res.status(500).send({ message: err });
-
-        data[0].password = hash;
-        data[0].save((err, updatedUser) => {
+      bcrypt.genSalt(SALT_PARAM_1, (err, salt) => {
+        bcrypt.hash(newPassword, salt, (err, hash) => {
           if (err) return res.status(500).send({ message: err });
 
-          const message = {
-            text:
-              'Your password is successfully recovered. Check email. New password was sent for you!',
-            subject: 'Password recovering',
-            html: `New password: <b>${newPassword}</b>`,
-          };
+          data[0].password = hash;
+          data[0].save((err, updatedUser) => {
+            if (err) return res.status(500).send({ message: err });
 
-          return sendEmail(req, res, req.body.email, message);
+            const message = {
+              text:
+                'Your password is successfully recovered. Check email. New password was sent for you!',
+              subject: 'Password recovering',
+              html: `New password: <b>${newPassword}</b>`,
+            };
+
+            return sendEmail(
+              req,
+              res,
+              req.body[USERS_MODEL_FIELDS.EMAIL],
+              message,
+            );
+          });
         });
       });
-    });
-  });
+    },
+  );
 });
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.status(200).send({ message: 'Success' });
+  res.status(200).send({ message: MESSAGES.SUCCESS });
 });
 
 router.get('/getuserdata', (req, res) => {
   const user = req.user;
 
-  if (!user) return res.status(401).send({ message: 'Not authorized' });
+  if (!user) return res.status(401).send({ message: MESSAGES.NOT_AUTHORIZED });
 
-  if (!user.isVerified)
-    return res.status(403).send({ message: 'You should confirm your email' });
+  if (!user[USERS_MODEL_FIELDS.ISVERIFIED])
+    return res.status(403).send({ message: MESSAGES.CONFIRM_EMAIL });
 
   return res.status(200).send({
-    username: user.username,
-    email: user.email,
+    username: user[USERS_MODEL_FIELDS.USERNAME],
+    email: user[USERS_MODEL_FIELDS.EMAIL],
     id: user.id,
   });
 });

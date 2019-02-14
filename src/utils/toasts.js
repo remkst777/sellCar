@@ -6,3 +6,13 @@ import alertify from 'alertifyjs';
 export const showToast = (type, text) => {
   alertify[type](text);
 };
+
+export const confirmToast = (msg, callback) => {
+  alertify.confirm(
+    msg,
+    () => {
+      callback();
+    },
+    () => alertify.error('Cancel'),
+  );
+};

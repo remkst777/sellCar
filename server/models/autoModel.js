@@ -1,78 +1,79 @@
 const mongoose = require('mongoose');
+const { AUTO_MODEL_FIELDS } = require('../constants');
 
 // User Schema
 const AutoSchema = mongoose.Schema({
-  brand: {
+  [AUTO_MODEL_FIELDS.BRAND]: {
     type: String,
     required: true,
     trim: true,
     lowercase: true,
   },
-  model: {
+  [AUTO_MODEL_FIELDS.MODEL]: {
     type: String,
     required: true,
     trim: true,
     lowercase: true,
   },
-  manufacturer: {
+  [AUTO_MODEL_FIELDS.MANUFACTURER]: {
     type: String,
     required: true,
     trim: true,
     lowercase: true,
   },
-  color: {
+  [AUTO_MODEL_FIELDS.COLOR]: {
     type: String,
     required: true,
     trim: true,
     lowercase: true,
   },
-  body: {
+  [AUTO_MODEL_FIELDS.BODY]: {
     type: String,
     required: true,
     trim: true,
     lowercase: true,
   },
-  fuel: {
+  [AUTO_MODEL_FIELDS.FUEL]: {
     type: String,
     required: true,
     trim: true,
     lowercase: true,
   },
-  year: {
+  [AUTO_MODEL_FIELDS.YEAR]: {
     type: Number,
     required: true,
     trim: true,
   },
-  capacity: {
+  [AUTO_MODEL_FIELDS.CAPACITY]: {
     type: Number,
     required: true,
     trim: true,
   },
-  cost: {
+  [AUTO_MODEL_FIELDS.COST]: {
     type: Number,
     required: true,
     trim: true,
   },
-  fotos: {
+  [AUTO_MODEL_FIELDS.FOTOS]: {
     type: Array,
     required: true,
   },
-  description: {
+  [AUTO_MODEL_FIELDS.DESCRIPTION]: {
     type: String,
     required: true,
     trim: true,
   },
-  popularity: {
+  [AUTO_MODEL_FIELDS.POPULARITY]: {
     type: Number,
     required: false,
     default: 1,
   },
-  date: {
+  [AUTO_MODEL_FIELDS.DATE]: {
     type: Date,
     required: false,
     default: Date.now,
   },
-  stock: {
+  [AUTO_MODEL_FIELDS.STOCK]: {
     type: Boolean,
     required: false,
     default: true,

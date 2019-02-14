@@ -4,6 +4,7 @@ export const profile = '/profile';
 
 export const registr = item => `/registr/${item || ''}`;
 export const cars = item => `/auto/${item || ''}`;
+export const singleCar = (brand, id) => `/auto/${brand || ''}/${id || ''}`;
 
 export const bmw = cars('bmw');
 export const ferrari = cars('ferrari');

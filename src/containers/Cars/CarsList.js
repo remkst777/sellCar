@@ -1,40 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Loader from 'components/Loader';
 import Image from 'components/Image';
 import Button from 'components/FormFields/Button';
 
-const CarItemStyled = styled.div`
+const CarItemStyled = styled.li`
   box-shadow: 0 0 2px #ffffffdd;
 `;
 
+const A = styled(Link)`
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #fff !important;
+`;
+
+/* eslint no-underscore-dangle: 0 */
 const CarItem = x => (
-  <CarItemStyled className="p-4 my-2">
-    <div className="text-uppercase">
-      {`${x.brand} ${x.model} / `}
-      {`${x.year} / ${x.cost}$ / `}
-      {`${`${x.capacity}`[0]}.`}
-      {`${`${x.capacity}`[1]} `}
-      {`${x.fuel}`}
-    </div>
-    <div className="d-flex flex-wrap pt-2">
-      {x.fotos.map(y => (
-        <Image src={y} size="80px" />
-      ))}
-    </div>
+  <CarItemStyled className="my-2">
+    <A to={`${x.brand}/${x._id}`} className="p-4">
+      <div className="text-capitalize">
+        {`${x.brand} ${x.model} / `}
+        {`${x.year} / ${x.cost}$ / `}
+        {`${`${x.capacity}`[0]}.`}
+        {`${`${x.capacity}`[1]} `}
+        {`${x.fuel}`}
+      </div>
+      <div className="d-flex flex-wrap pt-2">
+        {x.fotos.map(y => (
+          <Image src={y} size="80px" />
+        ))}
+      </div>
+    </A>
   </CarItemStyled>
 );
 
 const CarsList = ({ loadCarsLoading, cars, loadNextCars, isLast }) => (
   <div className="d-flex flex-column">
     {cars[0] && (
-      <div className="d-flex flex-column">
+      <ul className="d-flex flex-column">
         {cars.map(car => (
           <CarItem {...car} />
         ))}
-      </div>
+      </ul>
     )}
 
     {loadCarsLoading && <Loader size="sm" />}

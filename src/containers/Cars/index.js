@@ -15,6 +15,8 @@ import {
 import { showModal } from 'utils/modal';
 import * as routes from 'routes-config';
 
+import { select as accountProviderSelect } from 'containers/AccountProvider/selectors';
+
 import {
   getOptionList,
   getManufacturerWithModelsList,
@@ -77,11 +79,12 @@ class Cars extends React.PureComponent {
     this.props.setDefaultReducerDispatch();
   }
 
-  addCar = (...args) => {
+  addCar = async (...args) => {
     const values = args[0];
     const resetForm = args[2].reset;
 
-    this.props.addCarDispatch(values, resetForm);
+    const { brand, id } = await this.props.addCarDispatch(values, resetForm);
+    this.props.history.push(routes.singleCar(brand, id));
   };
 
   /* eslint consistent-return: 0 */
@@ -160,6 +163,7 @@ class Cars extends React.PureComponent {
       getOptionListLoading,
       getManufacturerWithModelsListDispatch,
       isLast,
+      userData,
     } = this.props;
 
     return (
@@ -169,7 +173,10 @@ class Cars extends React.PureComponent {
           <meta name="description" content="Cars | Description" />
         </Helmet>
 
-        <CarsHeader showAddAutoModal={this.showAddAutoModal} />
+        <CarsHeader
+          showAddAutoModal={this.showAddAutoModal}
+          userData={userData}
+        />
         <CarsView
           sort={sort}
           ranges={ranges}
@@ -211,6 +218,7 @@ Cars.propTypes = {
   filterCarsForm: PropTypes.object,
   match: PropTypes.object,
   history: PropTypes.object,
+  userData: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -223,6 +231,7 @@ const mapStateToProps = createStructuredSelector({
   ranges: select('ranges'),
   pagination: select('pagination'),
   isLast: select('isLast'),
+  userData: accountProviderSelect('userData'),
   filterCarsForm: state => state.form[FILTER_CARS_FORM],
 });
 

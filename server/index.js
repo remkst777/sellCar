@@ -9,9 +9,7 @@ const passport = require('passport');
 const UsersRoute = require('./routes/usersRoute');
 const AutoRoute = require('./routes/autoRoute');
 
-const PORT = 5000;
-const DB_CONNECTION =
-  'mongodb+srv://roman:!!!rem123@cluster0-t3gpa.mongodb.net/xccxxc?retryWrites=true';
+const { PORT, DB_CONNECTION } = require('./constants');
 
 mongoose.connect(
   DB_CONNECTION,

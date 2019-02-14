@@ -5,6 +5,7 @@ const Label = styled.h6`
   font-size: 10px;
   padding-bottom: 5px;
   padding-left: 5px;
+  text-transform: capitalize;
 `;
 
 export default Label;

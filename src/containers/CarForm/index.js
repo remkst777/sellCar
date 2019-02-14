@@ -28,31 +28,32 @@ import {
   CAPACITY_FIELD,
   COST_FIELD,
   DESCRIPTION_FIELD,
-  ADD_CAR_FORM,
-} from './constants';
+} from 'containers/Cars/constants';
 
 /* eslint import/no-mutable-exports: 0 */
-let AddCarForm = ({
+let CarForm = ({
   handleSubmit,
   size,
-  addCar,
+  submitCar,
   change,
   options,
   getOptionListLoading,
-  addCarLoading,
+  submitCarLoading,
   brandValue,
   reset,
   getManufacturerWithModelsList,
+  form,
+  pristine,
   imagesValue = [],
 }) => {
   const selectBrand = v => {
     reset();
-    getManufacturerWithModelsList(v.value, ADD_CAR_FORM);
+    getManufacturerWithModelsList(v.value, form);
   };
 
   return (
     <div>
-      <form className="row" onSubmit={handleSubmit(addCar)}>
+      <form className="row" onSubmit={handleSubmit(submitCar)}>
         <Field
           onChange={selectBrand}
           options={options.brand}
@@ -61,7 +62,7 @@ let AddCarForm = ({
           className="col-12 mb-2"
           placeholder="Choose brand"
           isCreatable
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={getOptionListLoading || submitCarLoading}
           component={Select}
           validate={[required, selectValidation2x20]}
           warn={[required, selectValidation2x20]}
@@ -73,7 +74,7 @@ let AddCarForm = ({
           className="col-12 mb-2"
           placeholder="Choose model"
           isCreatable
-          disabled={!brandValue || getOptionListLoading || addCarLoading}
+          disabled={!brandValue || getOptionListLoading || submitCarLoading}
           component={Select}
           validate={[required, selectValidation2x20]}
           warn={[required, selectValidation2x20]}
@@ -85,7 +86,7 @@ let AddCarForm = ({
           className="col-12 mb-2"
           placeholder="Choose manufacturer"
           isCreatable
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={getOptionListLoading || submitCarLoading}
           component={Select}
           validate={[required, selectValidation2x20]}
           warn={[required, selectValidation2x20]}
@@ -97,7 +98,7 @@ let AddCarForm = ({
           className="col-12 mb-2"
           placeholder="Choose color"
           isCreatable
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={getOptionListLoading || submitCarLoading}
           component={Select}
           validate={[required, selectValidation2x20]}
           warn={[required, selectValidation2x20]}
@@ -109,7 +110,7 @@ let AddCarForm = ({
           className="col-12 mb-2"
           placeholder="Choose body"
           isCreatable
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={getOptionListLoading || submitCarLoading}
           component={Select}
           validate={[required, selectValidation2x20]}
           warn={[required, selectValidation2x20]}
@@ -121,7 +122,7 @@ let AddCarForm = ({
           className="col-12 mb-2"
           placeholder="Choose fuel"
           isCreatable
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={getOptionListLoading || submitCarLoading}
           component={Select}
           validate={[required, selectValidation2x20]}
           warn={[required, selectValidation2x20]}
@@ -132,7 +133,7 @@ let AddCarForm = ({
           name={YEAR_FIELD}
           className="col-12 mb-2"
           placeholder="Type year..."
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={getOptionListLoading || submitCarLoading}
           component={Input}
           validate={[required, strLength4x4]}
           warn={[required, strLength4x4]}
@@ -143,7 +144,7 @@ let AddCarForm = ({
           name={CAPACITY_FIELD}
           className="col-12 mb-2"
           placeholder="Type capacity..."
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={getOptionListLoading || submitCarLoading}
           component={Input}
           validate={[required, strLength4x4]}
           warn={[required, strLength4x4]}
@@ -154,7 +155,7 @@ let AddCarForm = ({
           name={COST_FIELD}
           className="col-12 mb-2"
           placeholder="Type cost..."
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={getOptionListLoading || submitCarLoading}
           component={Input}
           validate={[required, strLength4x7]}
           warn={[required, strLength4x7]}
@@ -164,7 +165,7 @@ let AddCarForm = ({
           name={DESCRIPTION_FIELD}
           className="col-12 mb-2"
           placeholder="Type description..."
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={getOptionListLoading || submitCarLoading}
           component={Input}
           validate={[required, strLength5x100]}
           warn={[required, strLength5x100]}
@@ -179,7 +180,7 @@ let AddCarForm = ({
           size={size}
           className="col-12 mb-2"
           placeholder={`Upload image | Loaded: ${imagesValue.length}`}
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={getOptionListLoading || submitCarLoading}
           component={FileInput}
           validate={[required]}
           warn={[required]}
@@ -187,10 +188,12 @@ let AddCarForm = ({
         <Button
           size={size}
           className="col-12 mb-2"
-          disabled={getOptionListLoading || addCarLoading}
+          disabled={pristine || getOptionListLoading || submitCarLoading}
           type="submit"
           name={
-            getOptionListLoading || addCarLoading ? 'Adding...' : 'Add auto'
+            getOptionListLoading || submitCarLoading
+              ? 'Submitting...'
+              : 'Submit'
           }
         />
       </form>
@@ -198,34 +201,51 @@ let AddCarForm = ({
   );
 };
 
-AddCarForm.propTypes = {
+CarForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   size: PropTypes.string.isRequired,
-  addCar: PropTypes.func.isRequired,
+  submitCar: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   options: PropTypes.object,
+  form: PropTypes.string,
+  pristine: PropTypes.bool,
   getOptionListLoading: PropTypes.bool,
-  addCarLoading: PropTypes.bool,
+  submitCarLoading: PropTypes.bool,
   brandValue: PropTypes.object,
   reset: PropTypes.func,
   getManufacturerWithModelsList: PropTypes.func,
   imagesValue: PropTypes.array,
 };
 
-AddCarForm = reduxForm({
-  form: ADD_CAR_FORM,
-})(AddCarForm);
+CarForm = reduxForm({
+  enableReinitialize: true,
+})(CarForm);
 
-const selector = formValueSelector(ADD_CAR_FORM);
+CarForm = connect((state, props) => {
+  const selector = formValueSelector(props.form);
 
-AddCarForm = connect(state => {
   const brandValue = selector(state, BRAND_FIELD);
   const imagesValue = selector(state, IMAGES_FIELD);
+
+  const initialValues = {
+    [IMAGES_FIELD]: props.imagesInitial,
+    [BRAND_FIELD]: props.brandInitial,
+    [MODEL_FIELD]: props.modelInitial,
+    [MANUFACTURER_FIELD]: props.manufacturerInitial,
+    [COLOR_FIELD]: props.colorInitial,
+    [BODY_FIELD]: props.bodyInitial,
+    [FUEL_FIELD]: props.fuelInitial,
+    [YEAR_FIELD]: props.yearInitial,
+    [CAPACITY_FIELD]: props.capacityInitial,
+    [COST_FIELD]: props.costInitial,
+    [DESCRIPTION_FIELD]: props.descriptionInitial,
+  };
 
   return {
     brandValue,
     imagesValue,
+    initialValues,
   };
-})(AddCarForm);
+})(CarForm);
 
-export default React.memo(AddCarForm);
+export default React.memo(CarForm);

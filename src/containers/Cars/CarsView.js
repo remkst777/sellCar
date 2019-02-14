@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ModalDialog from 'components/ModalDialog';
 
-import AddCarForm from './AddCarForm';
+import CarForm from 'containers/CarForm';
 import FilterCarsForm from './FilterCarsForm';
 import Sorting from './Sorting';
 import CarsList from './CarsList';
 import Wrapper from './Wrapper';
 
-import { ADD_AUTO_MODAL_ID } from './constants';
+import { ADD_AUTO_MODAL_ID, ADD_CAR_FORM } from './constants';
 
 const CarsView = ({
   addCar,
@@ -50,10 +50,11 @@ const CarsView = ({
     </div>
 
     <ModalDialog id={ADD_AUTO_MODAL_ID}>
-      <AddCarForm
+      <CarForm
         size="sm"
-        addCar={addCar}
-        addCarLoading={addCarLoading}
+        form={ADD_CAR_FORM}
+        submitCar={addCar}
+        submitCarLoading={addCarLoading}
         options={options}
         getManufacturerWithModelsList={getManufacturerWithModelsList}
         getOptionListLoading={getOptionListLoading}

@@ -6,6 +6,7 @@ import Cars from 'containers/Cars';
 import Login from 'containers/Login';
 import Header from 'containers/Header';
 import Profile from 'containers/Profile';
+import SingleCar from 'containers/SingleCar';
 
 import SignUp from 'components/SignUp';
 import ForgotPassword from 'components/ForgotPassword';
@@ -21,6 +22,7 @@ const Wrapper = (WrappedComponent, props) => (
 
 const registrToken = routes.registr(':token');
 const carsRoute = routes.cars(':auto');
+const singleCarRoute = routes.singleCar(':brand', ':id');
 
 const AppRouting = () => (
   <BrowserRouter>
@@ -43,6 +45,10 @@ const AppRouting = () => (
           render={props => Wrapper(Cars, props)}
         />
         <Route exact path={carsRoute} render={props => Wrapper(Cars, props)} />
+        <Route
+          path={singleCarRoute}
+          render={props => Wrapper(SingleCar, props)}
+        />
         <Route
           path={routes.profile}
           render={props => Wrapper(Profile, props)}

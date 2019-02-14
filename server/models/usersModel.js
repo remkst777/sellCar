@@ -1,24 +1,30 @@
 const mongoose = require('mongoose');
+const { USERS_MODEL_FIELDS } = require('../constants');
 
 // User Schema
 const UserSchema = mongoose.Schema({
-  email: {
+  [USERS_MODEL_FIELDS.EMAIL]: {
     type: String,
     inique: true,
     required: true,
   },
-  username: {
+  [USERS_MODEL_FIELDS.USERNAME]: {
     type: String,
     required: true,
     trim: true,
   },
-  password: {
+  [USERS_MODEL_FIELDS.PASSWORD]: {
     type: String,
     required: true,
   },
-  isVerified: {
+  [USERS_MODEL_FIELDS.ISVERIFIED]: {
     type: Boolean,
     default: false,
+  },
+  [USERS_MODEL_FIELDS.DATE]: {
+    type: Date,
+    required: false,
+    default: Date.now,
   },
 });
 

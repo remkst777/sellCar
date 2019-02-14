@@ -1,13 +1,37 @@
 import { responseHandler } from './responseManagement';
 import { saveImage } from './ipfs';
 
+const headers = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+};
+
+export const getCarByIdUtil = async id => {
+  const response = await fetch('/get_car_by_id', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ id }),
+  });
+
+  const responseJson = await response.json();
+
+  return responseJson;
+};
+
+export const deleteCarUtil = async id => {
+  const response = await fetch('/delete_car', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ id }),
+  });
+
+  await responseHandler(response);
+};
+
 export const getRangeValuesUtil = async filter => {
   const response = await fetch('/get_range_values', {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify(filter),
   });
 
@@ -19,10 +43,7 @@ export const getRangeValuesUtil = async filter => {
 export const getManufacturerUtil = async brand => {
   const response = await fetch('/get_manufacturer', {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({ brand }),
   });
 
@@ -34,10 +55,7 @@ export const getManufacturerUtil = async brand => {
 export const loadCarsUtil = async (filter, sort, pagination, offset) => {
   const response = await fetch('/load_cars', {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({ filter, sort, pagination, offset }),
   });
 
@@ -49,25 +67,31 @@ export const loadCarsUtil = async (filter, sort, pagination, offset) => {
 export const saveAutoUtil = async savedObject => {
   const response = await fetch('/add_auto', {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify(savedObject),
   });
 
   const responseJson = await responseHandler(response);
 
-  return responseJson;
+  return responseJson.id;
+};
+
+export const updateAutoUtil = async (savedObject, carId) => {
+  const response = await fetch('/update_auto', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ ...savedObject, _id: carId }),
+  });
+
+  const responseJson = await responseHandler(response);
+
+  return responseJson.car;
 };
 
 export const getOptionListUtil = async option => {
   const response = await fetch('/get_distinct_options_list', {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({ option }),
   });
 
@@ -79,10 +103,7 @@ export const getOptionListUtil = async option => {
 export const getManufacturerWithModelsListUtil = async brand => {
   const response = await fetch('/get_models_options', {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({ brand }),
   });
 
@@ -120,7 +141,18 @@ export const saveArrayOfImages = async filesMass => {
   const hashMass = [];
 
   await new Promise(resolve => {
-    filesMass.map(file => {
+    filesMass.map((file, index) => {
+      // filesMass can contain hash(string) or files(object)
+      if (typeof file === 'string') {
+        hashMass.push(file);
+
+        if (index === filesMass.length - 1) {
+          resolve();
+        }
+
+        return;
+      }
+
       const reader = new FileReader();
 
       reader.onload = event => {

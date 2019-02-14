@@ -11,7 +11,7 @@ import {
   getRangeValuesUtil,
 } from 'utils/autoManagement';
 
-import { hideModal } from 'utils/modal';
+import { hideAllActiveModals } from 'utils/modal';
 
 import {
   GET_OPTION_LIST,
@@ -32,7 +32,6 @@ import {
   CAPACITY_FIELD,
   COST_FIELD,
   DESCRIPTION_FIELD,
-  ADD_AUTO_MODAL_ID,
   LOAD_CAR,
   LOAD_CAR_SUCCESS,
   LOAD_CAR_ERROR,
@@ -144,6 +143,7 @@ export function getManufacturerWithModelsList(brand, formName) {
   };
 }
 
+/* eslint consistent-return: 0 */
 export function addCar(val, resetForm) {
   return async dispatch => {
     try {
@@ -153,7 +153,7 @@ export function addCar(val, resetForm) {
 
       const fotos = await saveArrayOfImages(val[IMAGES_FIELD]);
 
-      await saveAutoUtil({
+      const id = await saveAutoUtil({
         fotos,
         brand: val[BRAND_FIELD].value,
         model: val[MODEL_FIELD].value,
@@ -168,13 +168,18 @@ export function addCar(val, resetForm) {
       });
 
       resetForm();
-      hideModal(ADD_AUTO_MODAL_ID);
+      hideAllActiveModals();
 
       dispatch(getOptionList());
 
       dispatch({
         type: ADD_CAR_SUCCESS,
       });
+
+      return {
+        brand: val[BRAND_FIELD].value,
+        id,
+      };
     } catch (err) {
       dispatch({
         type: ADD_CAR_ERROR,
