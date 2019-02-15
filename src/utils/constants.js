@@ -5,3 +5,13 @@ export const BACKENDLESS_SERVER_URL = 'https://api.backendless.com';
 export const IPFS_HOST = 'ipfs.infura.io';
 export const IPFS_PORT = 5001;
 export const IPFS_PROTOCOL = 'https';
+
+export const DEFAULT_HEADERS = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+};
+
+export const METHODS = {
+  POST: 'post',
+  GET: 'get',
+};

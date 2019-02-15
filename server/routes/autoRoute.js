@@ -105,15 +105,11 @@ router.post('/get_car_by_id', async (req, res) => {
   } catch (err) {
     res.status(500).send({ message: MESSAGES.SERVER_ERROR });
   }
-
-  if (!req.body.id) {
-    return req.status(400).send({ message: MESSAGES.BAD_REQUEST });
-  }
 });
 
 router.post('/get_models_options', (req, res) => {
   AutoModel.find().distinct(
-    'model',
+    AUTO_MODEL_FIELDS.MODEL,
     { [AUTO_MODEL_FIELDS.BRAND]: req.body[AUTO_MODEL_FIELDS.BRAND] },
     (err, list) => {
       if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });

@@ -1,15 +1,11 @@
 import { responseHandler } from './responseManagement';
 import { saveImage } from './ipfs';
-
-const headers = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-};
+import { METHODS, DEFAULT_HEADERS } from './constants';
 
 export const getCarByIdUtil = async id => {
   const response = await fetch('/get_car_by_id', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({ id }),
   });
 
@@ -20,8 +16,8 @@ export const getCarByIdUtil = async id => {
 
 export const deleteCarUtil = async id => {
   const response = await fetch('/delete_car', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({ id }),
   });
 
@@ -30,8 +26,8 @@ export const deleteCarUtil = async id => {
 
 export const getRangeValuesUtil = async filter => {
   const response = await fetch('/get_range_values', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify(filter),
   });
 
@@ -42,8 +38,8 @@ export const getRangeValuesUtil = async filter => {
 
 export const getManufacturerUtil = async brand => {
   const response = await fetch('/get_manufacturer', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({ brand }),
   });
 
@@ -54,8 +50,8 @@ export const getManufacturerUtil = async brand => {
 
 export const loadCarsUtil = async (filter, sort, pagination, offset) => {
   const response = await fetch('/load_cars', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({ filter, sort, pagination, offset }),
   });
 
@@ -66,8 +62,8 @@ export const loadCarsUtil = async (filter, sort, pagination, offset) => {
 
 export const saveAutoUtil = async savedObject => {
   const response = await fetch('/add_auto', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify(savedObject),
   });
 
@@ -78,8 +74,8 @@ export const saveAutoUtil = async savedObject => {
 
 export const updateAutoUtil = async (savedObject, carId) => {
   const response = await fetch('/update_auto', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({ ...savedObject, _id: carId }),
   });
 
@@ -90,8 +86,8 @@ export const updateAutoUtil = async (savedObject, carId) => {
 
 export const getOptionListUtil = async option => {
   const response = await fetch('/get_distinct_options_list', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({ option }),
   });
 
@@ -102,8 +98,8 @@ export const getOptionListUtil = async option => {
 
 export const getManufacturerWithModelsListUtil = async brand => {
   const response = await fetch('/get_models_options', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({ brand }),
   });
 

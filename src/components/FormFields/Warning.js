@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { red } from 'style-constants';
 
 const WarningStyled = styled.h6`
   font-size: 11px;
-  color: #ff0000;
+  color: ${red};
   padding: 5px;
   animation: TT1 0.5s;
   letter-spacing: 0.3px;

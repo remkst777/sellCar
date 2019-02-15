@@ -2,20 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { white } from 'style-constants';
 
 import Loader from 'components/Loader';
 import Image from 'components/Image';
 import Button from 'components/FormFields/Button';
 
 const CarItemStyled = styled.li`
-  box-shadow: 0 0 2px #ffffffdd;
+  box-shadow: 0 0 2px ${white}dd;
 `;
 
 const A = styled(Link)`
   display: block;
   width: 100%;
   height: 100%;
-  color: #fff !important;
+  color: ${white} !important;
 `;
 
 /* eslint no-underscore-dangle: 0 */

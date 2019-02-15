@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import { white } from 'style-constants';
 
 const HeaderStyled = styled.header`
   position: relative;
   z-index: 100;
   background: linear-gradient(to bottom, #17234a, #232526);
   text-transform: uppercase;
-  color: #fff;
+  color: ${white};
   font-size: 13px;
   letter-spacing: 1px;
   animation: TranslatorY 1s;

@@ -23,10 +23,10 @@ const HeaderView = ({ showModal, userData }) => (
         <div className="col-6 align-items-center justify-content-end d-flex">
           <ul className="d-flex">
             <li>
-              <Link to={routes.homepage}>About Us</Link>
+              <Link to={routes.about}>About Us</Link>
             </li>
             <li>
-              <Link to={routes.homepage}>Auto</Link>
+              <Link to={routes.anotherCar}>Auto</Link>
             </li>
 
             {!userData && <HeaderNOTAuth showModal={showModal} />}

@@ -9,6 +9,7 @@ const SliderStyled = styled.div`
   max-width: ${props => props.size || '100%'};
 `;
 
+// TODO: use hooks
 class Slider extends React.PureComponent {
   state = {
     currentImageIndex: 0,

@@ -8,6 +8,7 @@ import { bmw, ferrari, vw, audi, mercedes, anotherCar } from 'routes-config';
 import { confirmEmail } from 'utils/accountManagement';
 import { Box, Item } from './Box';
 
+// TODO: use react hooks
 class HomePage extends React.PureComponent {
   componentDidMount() {
     const { token } = this.props.match.params;

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { blue } from 'style-constants';
+
 import { getCorrectListForSelect } from 'utils/autoManagement';
 
 import Slider from 'components/Slider';
@@ -16,7 +18,7 @@ const Li = styled.li`
 `;
 
 const Key = styled.span`
-  color: #2196f3;
+  color: ${blue};
   ::after {
     content: ' ';
   }

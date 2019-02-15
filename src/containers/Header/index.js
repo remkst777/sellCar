@@ -8,17 +8,13 @@ import { select as accountProviderSelect } from 'containers/AccountProvider/sele
 
 import HeaderView from './HeaderView';
 
-class Header extends React.PureComponent {
-  showModal = e => {
-    showModal(e.target.dataset.modaltype);
-  };
+const showModalDispatch = e => {
+  showModal(e.target.dataset.modaltype);
+};
 
-  render() {
-    return (
-      <HeaderView userData={this.props.userData} showModal={this.showModal} />
-    );
-  }
-}
+const Header = ({ userData }) => (
+  <HeaderView userData={userData} showModal={showModalDispatch} />
+);
 
 Header.propTypes = {
   userData: PropTypes.object,

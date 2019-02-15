@@ -1,14 +1,10 @@
 import { responseHandler } from 'utils/responseManagement';
-
-const headers = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-};
+import { DEFAULT_HEADERS, METHODS } from './constants';
 
 export const loginUtil = async data => {
   const response = await fetch('/login', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({
       username: data.email,
       password: data.password,
@@ -53,8 +49,8 @@ export const getUserDataUtil = async () => {
 
 export const signupUtil = async data => {
   const response = await fetch('/registr', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({
       email: data.email,
       username: data.username,
@@ -67,8 +63,8 @@ export const signupUtil = async data => {
 
 export const recoverPasswordUtil = async data => {
   const response = await fetch('/recover-password', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({
       email: data.email,
     }),
@@ -79,8 +75,8 @@ export const recoverPasswordUtil = async data => {
 
 export const changePasswordUtil = async data => {
   const response = await fetch('/change-password', {
-    method: 'POST',
-    headers,
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
     body: JSON.stringify({
       email: data.email,
       password: data.password,

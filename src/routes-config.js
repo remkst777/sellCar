@@ -2,7 +2,7 @@ export const homepage = '/';
 export const about = '/about';
 export const profile = '/profile';
 
-export const registr = item => `/registr/${item || ''}`;
+export const registr = item => (item ? `/registr/${item}` : '/');
 export const cars = item => `/auto/${item || ''}`;
 export const singleCar = (brand, id) => `/auto/${brand || ''}/${id || ''}`;
 

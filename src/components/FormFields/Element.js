@@ -1,3 +1,5 @@
+import { purple, blue } from 'style-constants';
+
 export const properties = {
   lg: {
     fontSize: '16px',
@@ -8,9 +10,6 @@ export const properties = {
     height: '36px',
   },
 };
-
-export const red = '#6f42c1';
-export const blue = '#2196f3';
 
 const Element = size => `
   width: 100%;
@@ -29,8 +28,8 @@ const Element = size => `
   }
 
   :focus {
-    border: 1px solid ${red};
-    color: ${red};
+    border: 1px solid ${purple};
+    color: ${purple};
   }
 
   :disabled {

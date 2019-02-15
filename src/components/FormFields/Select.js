@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import NotCreatable from 'react-select';
 import Creatable from 'react-select/lib/Creatable';
 
+import { blue } from 'style-constants';
+
 import Warning from './Warning';
 import Label from './Label';
-import { blue, properties } from './Element';
+import { properties } from './Element';
 
 const SelectField = ({
   input = {},

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { white, blue, black } from 'style-constants';
 
 const Box = styled.div`
   position: absolute;
@@ -34,19 +35,19 @@ const Item = styled.div`
   @keyframes TT {
     from {
       opacity: 0;
-      box-shadow: 0 0 0px #fff;
+      box-shadow: 0 0 0px ${white};
     }
 
     to {
       opacity: 1;
-      box-shadow: 0 0 8px #fff;
+      box-shadow: 0 0 8px ${white};
     }
   }
 
   a {
     width: 100%;
     height: 100%;
-    color: #fff;
+    color: ${white};
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -54,7 +55,7 @@ const Item = styled.div`
 
     div {
       padding: 25px 15px;
-      background: rgba(0, 0, 0, 0.3);
+      background: ${black}66;
       text-transform: uppercase;
 
       p {
@@ -69,11 +70,11 @@ const Item = styled.div`
     flex: 2;
 
     a {
-      color: #2196f3;
+      color: ${blue};
       text-align: left;
 
       p {
-        color: #fff;
+        color: ${white};
         display: block;
       }
     }

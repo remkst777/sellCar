@@ -13,6 +13,7 @@ import ForgotPassword from 'components/ForgotPassword';
 import ChangePassword from 'components/ChangePassword';
 import NotFoundPage from 'components/NotFoundPage';
 import HomePage from 'components/HomePage';
+import AboutUs from 'components/AboutUs';
 
 const Wrapper = (WrappedComponent, props) => (
   <div className="py-3">
@@ -33,6 +34,11 @@ const AppRouting = () => (
           exact
           path={routes.homepage}
           render={props => Wrapper(HomePage, props)}
+        />
+        <Route
+          exact
+          path={routes.about}
+          render={props => Wrapper(AboutUs, props)}
         />
         <Route
           exact
