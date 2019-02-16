@@ -2,6 +2,8 @@ const PORT = 5000;
 const DB_CONNECTION =
   'mongodb+srv://roman:!!!rem123@cluster0-t3gpa.mongodb.net/xccxxc?retryWrites=true';
 
+const APP_ADMINS = ['remkst777@rambler.ru'];
+
 const MESSAGES = {
   FIELD_VALIDATION_FAILED: 'Field validation is failed',
   SERVER_ERROR: 'Field validation is failed',
@@ -16,6 +18,7 @@ const MESSAGES = {
   NOT_AUTHORIZED: 'Not authorized',
   NO_SUCH_USER: 'No such user',
   WRONG_PASSWORD: 'Wrong password',
+  ONLY_FOR_ADMIN: 'Action is only for admin',
 };
 
 const AUTO_MODEL_FIELDS = {
@@ -41,6 +44,13 @@ const USERS_MODEL_FIELDS = {
   PASSWORD: 'password',
   ISVERIFIED: 'isVerified',
   DATE: 'date',
+  ROLE: 'role',
+  CART: 'cart',
+};
+
+const USER_ROLES = {
+  ADMIN: 'admin',
+  MEMBER: 'member',
 };
 
 const SALT_PARAM_1 = 10;
@@ -55,4 +65,6 @@ module.exports = {
   AUTO_MODEL_FIELDS,
   USERS_MODEL_FIELDS,
   SALT_PARAM_1,
+  USER_ROLES,
+  APP_ADMINS,
 };

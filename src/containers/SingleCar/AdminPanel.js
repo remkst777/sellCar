@@ -10,7 +10,7 @@ const openModalDialogToEdit = () => {
 };
 
 const AdminPanel = ({ userData, deleteCar }) => {
-  if (!userData) {
+  if (!userData || userData.role !== 'admin') {
     return null;
   }
 

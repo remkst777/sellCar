@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { USERS_MODEL_FIELDS } = require('../constants');
+const { USERS_MODEL_FIELDS, USER_ROLES } = require('../constants');
 
 // User Schema
 const UserSchema = mongoose.Schema({
@@ -25,6 +25,15 @@ const UserSchema = mongoose.Schema({
     type: Date,
     required: false,
     default: Date.now,
+  },
+  [USERS_MODEL_FIELDS.ROLE]: {
+    type: String,
+    required: false,
+    default: USER_ROLES.MEMBER,
+  },
+  [USERS_MODEL_FIELDS.CART]: {
+    type: Array,
+    required: false,
   },
 });
 

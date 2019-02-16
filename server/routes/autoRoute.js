@@ -3,7 +3,12 @@ const express = require('express');
 const router = express.Router();
 const AutoModel = require('../models/autoModel');
 
-const { MESSAGES, AUTO_MODEL_FIELDS } = require('../constants');
+const {
+  MESSAGES,
+  AUTO_MODEL_FIELDS,
+  USER_ROLES,
+  USERS_MODEL_FIELDS,
+} = require('../constants');
 
 router.post('/add_auto', (req, res) => {
   const newAuto = new AutoModel(req.body);
@@ -13,7 +18,9 @@ router.post('/add_auto', (req, res) => {
   if (validationErrors)
     return res.status(400).send({ message: MESSAGES.FIELD_VALIDATION_FAILED });
 
-  // TODO: check - admin only can create
+  if (req.user[USERS_MODEL_FIELDS.ROLE] !== USER_ROLES.ADMIN) {
+    return res.status(403).send({ message: MESSAGES.ONLY_FOR_ADMIN });
+  }
 
   newAuto.save((err, data) => {
     if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
@@ -24,10 +31,12 @@ router.post('/add_auto', (req, res) => {
 router.post('/update_auto', (req, res) => {
   const validationErrors = carModelValidation(req, res);
 
-  // TODO: UPDATE only for admin
-
   if (validationErrors)
     return res.status(400).send({ message: MESSAGES.FIELD_VALIDATION_FAILED });
+
+  if (req.user[USERS_MODEL_FIELDS.ROLE] !== USER_ROLES.ADMIN) {
+    return res.status(403).send({ message: MESSAGES.ONLY_FOR_ADMIN });
+  }
 
   AutoModel.findByIdAndUpdate(
     req.body._id,
@@ -41,7 +50,9 @@ router.post('/update_auto', (req, res) => {
 });
 
 router.post('/delete_car', (req, res) => {
-  // TODO: Delete only for admin
+  if (req.user[USERS_MODEL_FIELDS.ROLE] !== USER_ROLES.ADMIN) {
+    return res.status(403).send({ message: MESSAGES.ONLY_FOR_ADMIN });
+  }
 
   AutoModel.deleteOne({ _id: req.body.id }, err => {
     if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });

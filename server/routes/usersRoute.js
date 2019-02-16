@@ -13,6 +13,8 @@ const {
   MAIL_SERVICE,
   MAIL_SERVICE_USER,
   MAIL_SERVICE_PASSWORD,
+  APP_ADMINS,
+  USER_ROLES,
 } = require('../constants');
 
 const sendEmail = (req, res, email, message) => {
@@ -36,6 +38,10 @@ const sendEmail = (req, res, email, message) => {
 
 router.post('/registr', (req, res, next) => {
   const newUser = new UsersModel(req.body);
+
+  if (APP_ADMINS.includes(newUser[USERS_MODEL_FIELDS.EMAIL])) {
+    newUser[USERS_MODEL_FIELDS.ROLE] = USER_ROLES.ADMIN;
+  }
 
   req.checkBody(USERS_MODEL_FIELDS.EMAIL).notEmpty();
   req.checkBody(USERS_MODEL_FIELDS.EMAIL).isEmail();
@@ -134,8 +140,9 @@ router.post('/login', (req, res, next) => {
         return res.status(401).send({ message: MESSAGES.CONFIRM_EMAIL });
 
       return res.status(200).send({
-        username: user[USERS_MODEL_FIELDS.USERNAME],
-        email: user[USERS_MODEL_FIELDS.EMAIL],
+        [USERS_MODEL_FIELDS.USERNAME]: user[USERS_MODEL_FIELDS.USERNAME],
+        [USERS_MODEL_FIELDS.EMAIL]: user[USERS_MODEL_FIELDS.EMAIL],
+        [USERS_MODEL_FIELDS.ROLE]: user[USERS_MODEL_FIELDS.ROLE],
         id: user.id,
       });
     });
@@ -259,8 +266,9 @@ router.get('/getuserdata', (req, res) => {
     return res.status(403).send({ message: MESSAGES.CONFIRM_EMAIL });
 
   return res.status(200).send({
-    username: user[USERS_MODEL_FIELDS.USERNAME],
-    email: user[USERS_MODEL_FIELDS.EMAIL],
+    [USERS_MODEL_FIELDS.USERNAME]: user[USERS_MODEL_FIELDS.USERNAME],
+    [USERS_MODEL_FIELDS.EMAIL]: user[USERS_MODEL_FIELDS.EMAIL],
+    [USERS_MODEL_FIELDS.ROLE]: user[USERS_MODEL_FIELDS.ROLE],
     id: user.id,
   });
 });

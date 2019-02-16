@@ -8,7 +8,6 @@ import { getUserData } from './actions';
 
 class AccountProvider extends React.PureComponent {
   componentDidMount() {
-    // TODO: check - it works slowly
     this.props.getUserDataDispatch();
     this.props.getOptionListDispatch();
   }

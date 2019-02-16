@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/FormFields/Button';
 
 const ProductsHeader = ({ showAddAutoModal, userData }) => {
-  if (!userData) {
+  if (!userData || userData.role !== 'admin') {
     return null;
   }
 

@@ -80,11 +80,15 @@ class Cars extends React.PureComponent {
   }
 
   addCar = async (...args) => {
-    const values = args[0];
-    const resetForm = args[2].reset;
+    try {
+      const values = args[0];
+      const resetForm = args[2].reset;
 
-    const { brand, id } = await this.props.addCarDispatch(values, resetForm);
-    this.props.history.push(routes.singleCar(brand, id));
+      const { brand, id } = await this.props.addCarDispatch(values, resetForm);
+      this.props.history.push(routes.singleCar(brand, id));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   /* eslint consistent-return: 0 */
