@@ -90,6 +90,10 @@ const SingleCarView = ({
           <Key>Description:</Key>
           <span>{car.description}</span>
         </Li>
+        <Li>
+          <Key>Popularity:</Key>
+          <span>{car.popularity}</span>
+        </Li>
       </ul>
     </div>
 

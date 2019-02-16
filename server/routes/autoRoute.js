@@ -102,6 +102,13 @@ router.post('/get_car_by_id', async (req, res) => {
 
     const car = await AutoModel.findById(req.body.id);
     res.status(200).send(car);
+
+    // increase popularity
+    AutoModel.findByIdAndUpdate(
+      req.body.id,
+      { [AUTO_MODEL_FIELDS.POPULARITY]: car[AUTO_MODEL_FIELDS.POPULARITY] + 1 },
+      () => null,
+    );
   } catch (err) {
     res.status(500).send({ message: MESSAGES.SERVER_ERROR });
   }
