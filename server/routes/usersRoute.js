@@ -5,6 +5,7 @@ const nodemailer = require('nodemailer');
 
 const router = express.Router();
 const UsersModel = require('../models/usersModel');
+const AutoModel = require('../models/autoModel');
 
 const {
   MESSAGES,
@@ -15,6 +16,7 @@ const {
   MAIL_SERVICE_PASSWORD,
   APP_ADMINS,
   USER_ROLES,
+  MAX_CART_LENGTH,
 } = require('../constants');
 
 const sendEmail = (req, res, email, message) => {
@@ -35,6 +37,14 @@ const sendEmail = (req, res, email, message) => {
 
   return res.status(200).send({ message: message.text });
 };
+
+const profileObject = obj => ({
+  [USERS_MODEL_FIELDS.USERNAME]: obj[USERS_MODEL_FIELDS.USERNAME],
+  [USERS_MODEL_FIELDS.EMAIL]: obj[USERS_MODEL_FIELDS.EMAIL],
+  [USERS_MODEL_FIELDS.ROLE]: obj[USERS_MODEL_FIELDS.ROLE],
+  [USERS_MODEL_FIELDS.CART]: obj[USERS_MODEL_FIELDS.CART],
+  id: obj._id,
+});
 
 router.post('/registr', (req, res, next) => {
   const newUser = new UsersModel(req.body);
@@ -139,12 +149,7 @@ router.post('/login', (req, res, next) => {
       if (!user[USERS_MODEL_FIELDS.ISVERIFIED])
         return res.status(401).send({ message: MESSAGES.CONFIRM_EMAIL });
 
-      return res.status(200).send({
-        [USERS_MODEL_FIELDS.USERNAME]: user[USERS_MODEL_FIELDS.USERNAME],
-        [USERS_MODEL_FIELDS.EMAIL]: user[USERS_MODEL_FIELDS.EMAIL],
-        [USERS_MODEL_FIELDS.ROLE]: user[USERS_MODEL_FIELDS.ROLE],
-        id: user.id,
-      });
+      return res.status(200).send(profileObject(user));
     });
   })(req, res, next);
 });
@@ -265,12 +270,62 @@ router.get('/getuserdata', (req, res) => {
   if (!user[USERS_MODEL_FIELDS.ISVERIFIED])
     return res.status(403).send({ message: MESSAGES.CONFIRM_EMAIL });
 
-  return res.status(200).send({
-    [USERS_MODEL_FIELDS.USERNAME]: user[USERS_MODEL_FIELDS.USERNAME],
-    [USERS_MODEL_FIELDS.EMAIL]: user[USERS_MODEL_FIELDS.EMAIL],
-    [USERS_MODEL_FIELDS.ROLE]: user[USERS_MODEL_FIELDS.ROLE],
-    id: user.id,
+  UsersModel.findById(user._id, (err, user) => {
+    if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
+    res.status(200).send(profileObject(user));
   });
+});
+
+router.post('/add_to_cart', (req, res) => {
+  const { user } = req;
+
+  if (!user) return res.status(401).send({ message: MESSAGES.NOT_AUTHORIZED });
+
+  if (!user[USERS_MODEL_FIELDS.ISVERIFIED])
+    return res.status(403).send({ message: MESSAGES.CONFIRM_EMAIL });
+
+  if (!req.body.id)
+    return res.status(400).send({ message: MESSAGES.BAD_REQUEST });
+
+  if (user.cart.length === MAX_CART_LENGTH)
+    return res.status(403).send({ message: MESSAGES.CART_LIMIT });
+
+  const index = user.cart.indexOf(req.body.id);
+
+  if (index < 0) {
+    user.cart.push(req.body.id);
+  } else {
+    user.cart.splice(index, 1);
+  }
+
+  UsersModel.findByIdAndUpdate(
+    user._id,
+    { cart: user.cart },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
+      res.status(200).send(profileObject(updatedUser));
+    },
+  );
+});
+
+router.get('/get_content_of_my_cart', (req, res) => {
+  const { user } = req;
+
+  if (!user) return res.status(401).send({ message: MESSAGES.NOT_AUTHORIZED });
+
+  if (!user[USERS_MODEL_FIELDS.ISVERIFIED])
+    return res.status(403).send({ message: MESSAGES.CONFIRM_EMAIL });
+
+  if (!user.cart[0]) return res.status(200).send([]);
+
+  AutoModel.find()
+    .where('_id')
+    .in(user.cart)
+    .exec((err, cars) => {
+      if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
+      res.status(200).send(cars);
+    });
 });
 
 module.exports = router;

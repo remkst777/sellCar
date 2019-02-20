@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+import { cart as cartRoute } from 'routes-config';
 import Button from 'components/FormFields/Button';
 
 const ProfileView = ({ showChangePasswordModal, logout, loadingLogout }) => (
   <div className="my-5">
-    <Button size="lg" className="col-12 my-2" name="Cart" />
+    <Link to={cartRoute}>
+      <Button size="lg" className="col-12 my-2" name="Cart" />
+    </Link>
     <Button
       size="lg"
       onClick={showChangePasswordModal}

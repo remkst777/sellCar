@@ -1,6 +1,25 @@
 import { responseHandler } from 'utils/responseManagement';
 import { DEFAULT_HEADERS, METHODS } from './constants';
 
+export const getContentOfMyCartUtil = async () => {
+  const response = await fetch('/get_content_of_my_cart');
+  const responseJson = await response.json();
+
+  return responseJson;
+};
+
+export const addToCartUtil = async id => {
+  const response = await fetch('/add_to_cart', {
+    method: METHODS.POST,
+    headers: DEFAULT_HEADERS,
+    body: JSON.stringify({ id }),
+  });
+
+  const responseJson = await responseHandler(response);
+
+  return responseJson;
+};
+
 export const loginUtil = async data => {
   const response = await fetch('/login', {
     method: METHODS.POST,

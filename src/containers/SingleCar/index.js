@@ -12,7 +12,6 @@ import Loader from 'components/Loader';
 import { select as accountProviderSelect } from 'containers/AccountProvider/selectors';
 import { select as selectFromCarsContainer } from 'containers/Cars/selectors';
 import { getManufacturerWithModelsList } from 'containers/Cars/actions';
-
 import { select } from './selectors';
 import { getCarById, updateCar, deleteCar } from './actions';
 

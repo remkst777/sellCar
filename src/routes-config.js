@@ -1,6 +1,7 @@
 export const homepage = '/';
 export const about = '/about';
 export const profile = '/profile';
+export const cart = '/cart';
 
 export const registr = item => (item ? `/registr/${item}` : '/');
 export const cars = item => `/auto/${item || ''}`;

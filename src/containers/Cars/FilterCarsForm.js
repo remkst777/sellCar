@@ -201,12 +201,11 @@ let FilterCarsForm = ({
 
 FilterCarsForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  submitSearch: PropTypes.func.isRequired,
   size: PropTypes.string.isRequired,
   options: PropTypes.object.isRequired,
   getOptionListLoading: PropTypes.bool.isRequired,
   loadCarsLoading: PropTypes.bool.isRequired,
-  brandValue: PropTypes.bool,
+  brandValue: PropTypes.object,
   reset: PropTypes.func,
   change: PropTypes.func,
   getManufacturerWithModelsList: PropTypes.func,

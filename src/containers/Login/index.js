@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -20,6 +21,11 @@ import {
   LOGIN_FORM_EMAIL_FIELD,
   LOGIN_FORM_PASSWORD_FIELD,
 } from './constants';
+
+const Badge = styled.span`
+  cursor: pointer;
+  letter-spacing: -0.7px;
+`;
 
 class Login extends React.PureComponent {
   submitLogin = val => {
@@ -52,20 +58,20 @@ class Login extends React.PureComponent {
             loading={loading}
           />
           <div className="pt-4">
-            <badge
+            <Badge
               onClick={this.sendVerificationLetter}
               className="text-primary"
             >
               Send verification letter?
-            </badge>
+            </Badge>
           </div>
           <div className="pt-3">
-            <badge
+            <Badge
               onClick={this.showForgotPasswordModal}
               className="text-primary"
             >
               Forgot password?
-            </badge>
+            </Badge>
           </div>
         </div>
       </ModalDialog>

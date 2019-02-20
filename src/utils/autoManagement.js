@@ -150,6 +150,7 @@ export const saveArrayOfImages = async filesMass => {
       }
 
       const reader = new FileReader();
+      const zip = 0.5;
 
       reader.onload = event => {
         const img = new Image();
@@ -158,11 +159,11 @@ export const saveArrayOfImages = async filesMass => {
         img.onload = function() {
           const elem = document.createElement('canvas');
 
-          elem.width = this.width;
-          elem.height = this.height;
+          elem.width = this.width * zip;
+          elem.height = this.height * zip;
 
           const ctx = elem.getContext('2d');
-          ctx.drawImage(img, 0, 0, this.width, this.height);
+          ctx.drawImage(img, 0, 0, this.width * zip, this.height * zip);
 
           ctx.canvas.toBlob(
             async blob => {
@@ -185,7 +186,7 @@ export const saveArrayOfImages = async filesMass => {
               reader.readAsDataURL(file);
             },
             'image/jpeg',
-            0.2,
+            0.4,
           );
         };
       };

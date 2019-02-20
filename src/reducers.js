@@ -6,6 +6,7 @@ import loginReducer from 'containers/Login/reducer';
 import profileReducer from 'containers/Profile/reducer';
 import accountProviderReducer from 'containers/AccountProvider/reducer';
 import singleCarReducer from 'containers/SingleCar/reducer';
+import cartReducer from 'containers/Cart/reducer';
 
 export default combineReducers({
   carsReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
   profileReducer,
   accountProviderReducer,
   singleCarReducer,
+  cartReducer,
   form: formReducer,
 });

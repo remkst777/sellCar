@@ -9,6 +9,8 @@ import Slider from 'components/Slider';
 import ModalDialog from 'components/ModalDialog';
 import CarForm from 'containers/CarForm';
 
+import AddToCartButton from 'containers/AddToCartButton';
+
 import AdminPanel from './AdminPanel';
 import { MODAL_EDIT_FORM_ID, EDIT_CAR_FORM } from './constants';
 
@@ -24,6 +26,7 @@ const Key = styled.span`
   }
 `;
 
+/* eslint no-underscore-dangle: 0 */
 const SingleCarView = ({
   car,
   userData,
@@ -42,6 +45,8 @@ const SingleCarView = ({
     </div>
 
     <div className="col-12 col-xl-6">
+      {userData && <AddToCartButton className="mb-3" id={car._id} />}
+
       <h6 className="my-2">Technical characteristics:</h6>
       <ul>
         <Li>

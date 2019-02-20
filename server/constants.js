@@ -19,6 +19,7 @@ const MESSAGES = {
   NO_SUCH_USER: 'No such user',
   WRONG_PASSWORD: 'Wrong password',
   ONLY_FOR_ADMIN: 'Action is only for admin',
+  CART_LIMIT: 'Cart limit is achieved',
 };
 
 const AUTO_MODEL_FIELDS = {
@@ -58,6 +59,8 @@ const MAIL_SERVICE = 'Gmail';
 const MAIL_SERVICE_USER = 'romanrem888@gmail.com';
 const MAIL_SERVICE_PASSWORD = '!!!qqq123';
 
+const MAX_CART_LENGTH = 15;
+
 module.exports = {
   PORT,
   DB_CONNECTION,
@@ -67,4 +70,5 @@ module.exports = {
   SALT_PARAM_1,
   USER_ROLES,
   APP_ADMINS,
+  MAX_CART_LENGTH,
 };

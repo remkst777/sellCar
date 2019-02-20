@@ -31,7 +31,12 @@ const HeaderView = ({ showModal, userData }) => (
 
             {!userData && <HeaderNOTAuth showModal={showModal} />}
 
-            {userData && <HeaderAuth username={userData.username} />}
+            {userData && (
+              <HeaderAuth
+                username={userData.username}
+                cartLength={userData.cart.length}
+              />
+            )}
           </ul>
         </div>
       </div>
@@ -40,10 +45,7 @@ const HeaderView = ({ showModal, userData }) => (
 );
 
 HeaderView.propTypes = {
-  isFormShowed: PropTypes.bool.isRequired,
-  submitSearch: PropTypes.func.isRequired,
-  showForm: PropTypes.func.isRequired,
-  showModal: PropTypes.bool.isRequired,
+  showModal: PropTypes.func.isRequired,
   userData: PropTypes.object,
 };
 

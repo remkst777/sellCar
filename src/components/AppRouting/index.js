@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import * as routes from 'routes-config';
 
+import Cart from 'containers/Cart';
 import Cars from 'containers/Cars';
 import Login from 'containers/Login';
 import Header from 'containers/Header';
@@ -59,6 +60,7 @@ const AppRouting = () => (
           path={routes.profile}
           render={props => Wrapper(Profile, props)}
         />
+        <Route path={routes.cart} render={props => Wrapper(Cart, props)} />
         <Route render={props => Wrapper(NotFoundPage, props)} />
       </Switch>
 

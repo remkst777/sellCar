@@ -9,3 +9,9 @@ export const select = item =>
     selectAccountProviderReducer,
     substate => substate[item],
   );
+
+export const selectCart = () =>
+  createSelector(
+    selectAccountProviderReducer,
+    substate => (substate.userData ? substate.userData.cart : null),
+  );

@@ -15,11 +15,13 @@ import ProfileView from './ProfileView';
 
 class Profile extends React.PureComponent {
   componentDidUpdate() {
+    const type = 'error';
+    const message = 'Not authorized';
     const { userData, userDataLoading } = this.props;
 
     if (!userDataLoading && !userData) {
       this.props.history.push(routes.homepage);
-      showToast('error', 'Not authorized');
+      showToast(type, message);
     }
   }
 
@@ -28,12 +30,12 @@ class Profile extends React.PureComponent {
     logoutDispatch(history);
   };
 
-  showChangePasswordModal = () => {
-    this.props.showChangePasswordModalDispatch();
-  };
-
   render() {
-    const { userData, loadingLogout } = this.props;
+    const {
+      userData,
+      loadingLogout,
+      showChangePasswordModalDispatch,
+    } = this.props;
 
     return (
       <div className="container">
@@ -46,7 +48,7 @@ class Profile extends React.PureComponent {
           <ProfileView
             logout={this.logout}
             loadingLogout={loadingLogout}
-            showChangePasswordModal={this.showChangePasswordModal}
+            showChangePasswordModal={showChangePasswordModalDispatch}
           />
         )}
       </div>
