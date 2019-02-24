@@ -2,7 +2,6 @@ import { hideAllActiveModals } from 'utils/modal';
 
 import {
   saveArrayOfImages,
-  getCarByIdUtil,
   updateAutoUtil,
   deleteCarUtil,
 } from 'utils/autoManagement';
@@ -24,6 +23,11 @@ import {
 import { getOptionList } from 'containers/Cars/actions';
 
 import {
+  getCarFromCache,
+  putToCache,
+} from 'containers/DataCacheProvider/actions';
+
+import {
   GET_CAR_BY_ID,
   GET_CAR_BY_ID_SUCCESS,
   GET_CAR_BY_ID_ERROR,
@@ -42,7 +46,7 @@ export function getCarById(id) {
         type: GET_CAR_BY_ID,
       });
 
-      const car = await getCarByIdUtil(id);
+      const car = await dispatch(getCarFromCache(id));
 
       dispatch({
         type: GET_CAR_BY_ID_SUCCESS,
@@ -105,6 +109,8 @@ export function updateCar(val, resetForm, carId) {
       };
 
       const car = await updateAutoUtil(savedObject, carId);
+
+      dispatch(putToCache('cars', [car]));
 
       resetForm();
       hideAllActiveModals();

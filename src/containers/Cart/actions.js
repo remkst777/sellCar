@@ -1,4 +1,5 @@
 import { getContentOfMyCartUtil } from 'utils/accountManagement';
+import { putToCache } from 'containers/DataCacheProvider/actions';
 
 import {
   GET_CONTENT_OF_MY_CART,
@@ -14,6 +15,8 @@ export function getContentOfMyCart() {
       });
 
       const cars = await getContentOfMyCartUtil();
+
+      dispatch(putToCache('cars', cars));
 
       dispatch({
         type: GET_CONTENT_OF_MY_CART_SUCCESS,

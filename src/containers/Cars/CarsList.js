@@ -15,6 +15,7 @@ import AddToCartButton from 'containers/AddToCartButton';
 const CarItemStyled = styled.li`
   box-shadow: 0 0 2px ${white}dd;
   position: relative;
+  background: ${white}16;
 `;
 
 const A = styled(Link)`

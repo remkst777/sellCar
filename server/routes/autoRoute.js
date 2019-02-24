@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const AutoModel = require('../models/autoModel');
+const UsersModel = require('../models/usersModel');
 
 const {
   MESSAGES,
@@ -56,7 +57,17 @@ router.post('/delete_car', (req, res) => {
 
   AutoModel.deleteOne({ _id: req.body.id }, err => {
     if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
-    res.status(200).send({ message: MESSAGES.SUCCESS });
+
+    // update cart of users : if deleted item was in user's cart -> delete it from cart
+    UsersModel.updateMany(
+      {},
+      { $pull: { cart: { $in: [req.body.id] } } },
+      { multi: true },
+      (err, data) => {
+        if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
+        res.status(200).send({ message: MESSAGES.SUCCESS });
+      }
+    );
   });
 });
 

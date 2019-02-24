@@ -171,7 +171,7 @@ class Cars extends React.PureComponent {
     } = this.props;
 
     return (
-      <div className="container-fluid">
+      <div className="container">
         <Helmet>
           <title>Cars</title>
           <meta name="description" content="Cars | Description" />

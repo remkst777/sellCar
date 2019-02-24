@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import {
   GET_CONTENT_OF_MY_CART,
   GET_CONTENT_OF_MY_CART_SUCCESS,
@@ -16,7 +18,11 @@ function cartReducer(state = initialState, action) {
     case GET_CONTENT_OF_MY_CART:
       return { ...state, cartItemsLoading: true };
     case GET_CONTENT_OF_MY_CART_SUCCESS:
-      return { ...state, cartItemsLoading: false, cartItems: cars };
+      return {
+        ...state,
+        cartItemsLoading: false,
+        cartItems: _.uniqBy(cars.concat(state.cartItems), '_id'),
+      };
     case GET_CONTENT_OF_MY_CART_ERROR:
       return { ...state, cartItemsLoading: false };
 

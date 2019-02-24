@@ -19,29 +19,32 @@ const Item = styled.li`
 `;
 
 /* eslint no-underscore-dangle: 0 */
-const ListOfItems = ({ cartItems }) => (
+const ListOfItems = ({ cart, cartItems }) => (
   <div>
     <ul>
-      {cartItems.map(x => (
-        <Item key={x._id}>
-          <p className="text-capitalize">
-            <Link to={routes.singleCar(x.brand, x._id)}>
-              {`${x.brand} ${x.model} / `}
-              {`${x.year} / ${x.cost}$ / `}
-              {`${`${x.capacity}`[0]}.`}
-              {`${`${x.capacity}`[1]} `}
-              {`${x.fuel}`}
-            </Link>
-          </p>
-          <AddToCartButton id={x._id} />
-        </Item>
-      ))}
+      {cartItems
+        .filter(y => cart.includes(y._id))
+        .map(x => (
+          <Item key={x._id}>
+            <p className="text-capitalize">
+              <Link to={routes.singleCar(x.brand, x._id)}>
+                {`${x.brand} ${x.model} / `}
+                {`${x.year} / ${x.cost}$ / `}
+                {`${`${x.capacity}`[0]}.`}
+                {`${`${x.capacity}`[1]} `}
+                {`${x.fuel}`}
+              </Link>
+            </p>
+            <AddToCartButton id={x._id} />
+          </Item>
+        ))}
     </ul>
   </div>
 );
 
 ListOfItems.propTypes = {
   cartItems: PropTypes.array,
+  cart: PropTypes.array,
 };
 
 export default React.memo(ListOfItems);

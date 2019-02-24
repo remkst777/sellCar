@@ -8,6 +8,7 @@ import $ from 'jquery';
 
 import AppRouting from 'components/AppRouting';
 import AccountProvider from 'containers/AccountProvider';
+import DataCacheProvider from 'containers/DataCacheProvider';
 
 import configureStore from './configureStore';
 
@@ -21,7 +22,9 @@ const store = configureStore();
 ReactDOM.render(
   <Provider store={store}>
     <AccountProvider>
-      <AppRouting />
+      <DataCacheProvider>
+        <AppRouting />
+      </DataCacheProvider>
     </AccountProvider>
   </Provider>,
   document.getElementById('root'),

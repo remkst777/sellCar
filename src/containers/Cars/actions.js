@@ -13,6 +13,8 @@ import {
 
 import { hideAllActiveModals } from 'utils/modal';
 
+import { putToCache } from 'containers/DataCacheProvider/actions';
+
 import {
   GET_OPTION_LIST,
   SET_OPTION,
@@ -48,6 +50,9 @@ export function loadCars(filter, sort, pagination, offset, next) {
 
       // load cars with filter(@object)
       const cars = await loadCarsUtil(filter, sort, pagination, offset);
+
+      // cache cars in DataCacheProvider
+      dispatch(putToCache('cars', cars));
 
       // get ranges for findCar form
       const ranges = await getRangeValuesUtil(filter);
