@@ -26,10 +26,10 @@ const app = express();
 
 app.enable('trust proxy');
 
-// Session rate limit (100 req. per minute)
+// Session rate limit (10000 req. per minute)
 const limiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 100,
+  max: 10000,
 });
 
 app.use(limiter);
