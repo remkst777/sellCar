@@ -20,6 +20,7 @@ const MESSAGES = {
   WRONG_PASSWORD: 'Wrong password',
   ONLY_FOR_ADMIN: 'Action is only for admin',
   CART_LIMIT: 'Cart limit is achieved',
+  MAX_IMAGE_SIZE_EXCEED: 'Max image size is exceed',
 };
 
 const AUTO_MODEL_FIELDS = {
@@ -61,6 +62,9 @@ const MAIL_SERVICE_PASSWORD = '!!!qqq123';
 
 const MAX_CART_LENGTH = 15;
 
+const PUBLIC_IMAGES = 'public/images';
+const MAX_IMAGE_SIZE = 1000000; // 1Mb
+
 module.exports = {
   PORT,
   DB_CONNECTION,
@@ -74,4 +78,6 @@ module.exports = {
   MAIL_SERVICE,
   MAIL_SERVICE_USER,
   MAIL_SERVICE_PASSWORD,
+  PUBLIC_IMAGES,
+  MAX_IMAGE_SIZE,
 };

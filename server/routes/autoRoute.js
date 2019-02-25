@@ -10,40 +10,35 @@ const {
   AUTO_MODEL_FIELDS,
   USER_ROLES,
   USERS_MODEL_FIELDS,
+  PUBLIC_IMAGES,
+  MAX_IMAGE_SIZE,
 } = require('../constants');
 
 router.get('/images/:id', (req, res) => {
   const { id } = req.params;
-  
-  fs.readFile(`public/images/${id}`, (err, file) => {
+
+  fs.readFile(`${PUBLIC_IMAGES}/${id}`, (err, file) => {
     if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
     res.status(200).send(file);
-  })
+  });
 });
 
 router.post('/add_auto', async (req, res) => {
+  if (req.user[USERS_MODEL_FIELDS.ROLE] !== USER_ROLES.ADMIN) {
+    return res.status(403).send({ message: MESSAGES.ONLY_FOR_ADMIN });
+  }
+
   const newAuto = new AutoModel(req.body);
-
-  // fotos validation
-  // number: 10
-  // size
-  // check base64
-  
-  // public/images/ to constants
-  
-  // request is too large
-  
-  const fotos = await saveImages(req.body.fotos);
-  newAuto.fotos = fotos;
-
   const validationErrors = carModelValidation(req, res);
 
   if (validationErrors)
     return res.status(400).send({ message: MESSAGES.FIELD_VALIDATION_FAILED });
 
-  if (req.user[USERS_MODEL_FIELDS.ROLE] !== USER_ROLES.ADMIN) {
-    return res.status(403).send({ message: MESSAGES.ONLY_FOR_ADMIN });
-  }
+  const fotos = await saveImages(req.body.fotos);
+  if (typeof fotos === 'string')
+    return res.status(400).send({ message: fotos });
+
+  newAuto.fotos = fotos;
 
   newAuto.save((err, data) => {
     if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
@@ -52,17 +47,20 @@ router.post('/add_auto', async (req, res) => {
 });
 
 router.post('/update_auto', async (req, res) => {
+  if (req.user[USERS_MODEL_FIELDS.ROLE] !== USER_ROLES.ADMIN) {
+    return res.status(403).send({ message: MESSAGES.ONLY_FOR_ADMIN });
+  }
+
   const validationErrors = carModelValidation(req, res);
-  
-  const fotos = await saveImages(req.body.fotos);
-  req.body.fotos = fotos;
 
   if (validationErrors)
     return res.status(400).send({ message: MESSAGES.FIELD_VALIDATION_FAILED });
 
-  if (req.user[USERS_MODEL_FIELDS.ROLE] !== USER_ROLES.ADMIN) {
-    return res.status(403).send({ message: MESSAGES.ONLY_FOR_ADMIN });
-  }
+  const fotos = await saveImages(req.body.fotos);
+  if (typeof fotos === 'string')
+    return res.status(400).send({ message: fotos });
+
+  req.body.fotos = fotos;
 
   AutoModel.findByIdAndUpdate(
     req.body._id,
@@ -98,13 +96,20 @@ router.post('/delete_car', (req, res) => {
 });
 
 function saveImages(arr) {
-  const fotos = arr.map(base64File => {
-    const name = `${Date.now()}`;
-    fs.writeFileSync(`public/images/${name}`, base64File);
-    
-    return name;
+  const isInvalidSize = arr.filter(x => x.length > MAX_IMAGE_SIZE)[0];
+  if (isInvalidSize) return MESSAGES.MAX_IMAGE_SIZE_EXCEED;
+
+  const fotos = arr.map(file => {
+    if (file.length > `${Date.now()}`.length) {
+      const name = `${Date.now()}`;
+      fs.writeFileSync(`${PUBLIC_IMAGES}/${name}`, file);
+
+      return name;
+    }
+
+    return file;
   });
-  
+
   return fotos;
 }
 

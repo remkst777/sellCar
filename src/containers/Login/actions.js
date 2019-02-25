@@ -1,6 +1,8 @@
 import { loginUtil, sendVerificationLetterUtil } from 'utils/accountManagement';
 import { hideModal, showModal, hideAllActiveModals } from 'utils/modal';
 
+import { getUserData } from 'containers/AccountProvider/actions';
+
 import { GET_USER_DATA_SUCCESS } from 'containers/AccountProvider/constants';
 import { MODAL_DIALOG_FORGOT_PASSWORD_ID } from 'components/ForgotPassword/constants';
 
@@ -22,6 +24,8 @@ export function login(data) {
       });
 
       const userData = await loginUtil(data);
+
+      dispatch(getUserData());
 
       dispatch({
         type: LOGIN_SUCCESS,
