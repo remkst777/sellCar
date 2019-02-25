@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { getText } from 'utils/ipfs';
-
 import Loader from 'components/Loader';
 import ImageStyled from './ImageStyled';
 
@@ -28,12 +26,10 @@ class Image extends React.PureComponent {
   }
 
   fetch = async () => {
-    try {
-      const src = await getText(this.props.src);
-      this.setState({ src });
-    } catch (err) {
-      setTimeout(() => this.fetch(), 1000);
-    }
+    const fetcher = await fetch(`/images/${this.props.src}`);
+    const src = await fetcher.text();
+
+    this.setState({ src });
   };
 
   render() {

@@ -1,5 +1,4 @@
 import { responseHandler } from './responseManagement';
-import { saveImage } from './ipfs';
 import { METHODS, DEFAULT_HEADERS } from './constants';
 
 export const getCarByIdUtil = async id => {
@@ -134,13 +133,13 @@ export const rangeToObj = (filter, minField, maxField) => {
 
 /* eslint-disable */
 export const saveArrayOfImages = async filesMass => {
-  const hashMass = [];
+  const base64Files = [];
 
   await new Promise(resolve => {
     filesMass.map((file, index) => {
       // filesMass can contain hash(string) or files(object)
       if (typeof file === 'string') {
-        hashMass.push(file);
+        base64Files.push(file);
 
         if (index === filesMass.length - 1) {
           resolve();
@@ -174,11 +173,10 @@ export const saveArrayOfImages = async filesMass => {
 
               const reader = new FileReader();
 
-              reader.onload = async () => {
-                const ipfsHash = await saveImage(reader.result);
-                hashMass.push(ipfsHash);
+              reader.onload = () => {
+                base64Files.push(reader.result);
 
-                if (hashMass.length === filesMass.length) {
+                if (base64Files.length === filesMass.length) {
                   resolve();
                 }
               };
@@ -195,6 +193,6 @@ export const saveArrayOfImages = async filesMass => {
     });
   });
 
-  return hashMass;
+  return base64Files;
 };
 /* eslint-enable */

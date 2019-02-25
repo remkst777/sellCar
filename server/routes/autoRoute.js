@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 
 const router = express.Router();
 const AutoModel = require('../models/autoModel');
@@ -11,8 +12,29 @@ const {
   USERS_MODEL_FIELDS,
 } = require('../constants');
 
-router.post('/add_auto', (req, res) => {
+router.get('/images/:id', (req, res) => {
+  const { id } = req.params;
+  
+  fs.readFile(`public/images/${id}`, (err, file) => {
+    if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
+    res.status(200).send(file);
+  })
+});
+
+router.post('/add_auto', async (req, res) => {
   const newAuto = new AutoModel(req.body);
+
+  // fotos validation
+  // number: 10
+  // size
+  // check base64
+  
+  // public/images/ to constants
+  
+  // request is too large
+  
+  const fotos = await saveImages(req.body.fotos);
+  newAuto.fotos = fotos;
 
   const validationErrors = carModelValidation(req, res);
 
@@ -29,8 +51,11 @@ router.post('/add_auto', (req, res) => {
   });
 });
 
-router.post('/update_auto', (req, res) => {
+router.post('/update_auto', async (req, res) => {
   const validationErrors = carModelValidation(req, res);
+  
+  const fotos = await saveImages(req.body.fotos);
+  req.body.fotos = fotos;
 
   if (validationErrors)
     return res.status(400).send({ message: MESSAGES.FIELD_VALIDATION_FAILED });
@@ -64,12 +89,24 @@ router.post('/delete_car', (req, res) => {
       { $pull: { cart: { $in: [req.body.id] } } },
       { multi: true },
       (err, data) => {
-        if (err) return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
+        if (err)
+          return res.status(500).send({ message: MESSAGES.SERVER_ERROR });
         res.status(200).send({ message: MESSAGES.SUCCESS });
-      }
+      },
     );
   });
 });
+
+function saveImages(arr) {
+  const fotos = arr.map(base64File => {
+    const name = `${Date.now()}`;
+    fs.writeFileSync(`public/images/${name}`, base64File);
+    
+    return name;
+  });
+  
+  return fotos;
+}
 
 function carModelValidation(req, res) {
   req.checkBody(AUTO_MODEL_FIELDS.BRAND).notEmpty();
