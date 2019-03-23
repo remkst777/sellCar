@@ -24,7 +24,7 @@ const Item = styled.div`
   transition: 0.3s ease;
   cursor: pointer;
   height: 100%;
-  background: url(${props => require(`images/${props.slide}.jpg`)});
+  background: url(${props => require(`images/${props.slide}.png`)});
   background-size: cover;
 
   animation: TT 1s;
