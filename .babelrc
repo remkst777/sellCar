@@ -14,6 +14,7 @@
   "plugins": [
     "@babel/plugin-syntax-class-properties",
     "@babel/plugin-proposal-class-properties",
+    "dynamic-import-webpack",
     "@babel/transform-runtime"
   ],
   "env": {
