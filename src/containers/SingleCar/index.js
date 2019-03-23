@@ -25,10 +25,10 @@ class SingleCar extends React.PureComponent {
   }
 
   updateCar = (...args) => {
-    const { values, reset } = args[2];
+    const { values, reset, closeModal } = args[2];
     const carId = this.props.car._id;
 
-    this.props.updateCarDispatch(values, reset, carId);
+    this.props.updateCarDispatch(values, reset, carId, closeModal);
   };
 
   deleteCar = () => {

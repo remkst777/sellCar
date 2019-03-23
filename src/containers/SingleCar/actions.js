@@ -83,7 +83,7 @@ export function deleteCar(id) {
   };
 }
 
-export function updateCar(val, resetForm, carId) {
+export function updateCar(val, resetForm, carId, closeModal) {
   return async dispatch => {
     try {
       dispatch({
@@ -111,6 +111,8 @@ export function updateCar(val, resetForm, carId) {
       dispatch(putToCache('cars', [car]));
 
       resetForm();
+
+      closeModal(false);
 
       dispatch(getOptionList());
 

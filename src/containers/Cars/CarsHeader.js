@@ -42,6 +42,7 @@ const ProductsHeader = ({
           options={options}
           getManufacturerWithModelsList={getManufacturerWithModelsList}
           getOptionListLoading={getOptionListLoading}
+          closeModal={changeView}
         />
       </ModalDialog>
     </div>

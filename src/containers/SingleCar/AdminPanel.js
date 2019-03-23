@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { getCorrectListForSelect } from 'utils/autoManagement';
+
 import Button from 'components/FormFields/Button';
 import ModalDialog from 'components/ModalDialog';
 import CarForm from 'containers/CarForm';
@@ -14,7 +16,6 @@ const AdminPanel = ({
   updateCarLoading,
   options,
   car,
-  getCorrectListForSelect,
   getManufacturerWithModelsList,
   getOptionListLoading,
 }) => {
@@ -55,6 +56,7 @@ const AdminPanel = ({
           descriptionInitial={car.description}
           getManufacturerWithModelsList={getManufacturerWithModelsList}
           getOptionListLoading={getOptionListLoading}
+          closeModal={changeView}
         />
       </ModalDialog>
     </div>
@@ -68,7 +70,6 @@ AdminPanel.propTypes = {
   updateCarLoading: PropTypes.bool,
   options: PropTypes.object,
   car: PropTypes.object,
-  getCorrectListForSelect: PropTypes.func,
   getManufacturerWithModelsList: PropTypes.func,
   getOptionListLoading: PropTypes.bool,
 };

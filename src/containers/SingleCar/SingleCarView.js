@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { blue } from 'style-constants';
 
-import { getCorrectListForSelect } from 'utils/autoManagement';
-
 import Slider from 'components/Slider';
 import AddToCartButton from 'containers/AddToCartButton';
 
@@ -31,16 +29,16 @@ const SingleCarView = ({
   getManufacturerWithModelsList,
   getOptionListLoading,
   deleteCar,
+  updateCarLoading,
 }) => (
   <div className="row">
     <AdminPanel
       userData={userData}
       deleteCar={deleteCar}
       updateCar={updateCar}
-      updateCarLoading={updateCar}
+      updateCarLoading={updateCarLoading}
       options={options}
       car={car}
-      getCorrectListForSelect={getCorrectListForSelect}
       getManufacturerWithModelsList={getManufacturerWithModelsList}
       getOptionListLoading={getOptionListLoading}
     />

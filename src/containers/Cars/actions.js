@@ -147,7 +147,7 @@ export function getManufacturerWithModelsList(brand, formName) {
 }
 
 /* eslint consistent-return: 0 */
-export function addCar(val, resetForm) {
+export function addCar(val, resetForm, closeModal) {
   return async dispatch => {
     try {
       dispatch({
@@ -171,6 +171,8 @@ export function addCar(val, resetForm) {
       });
 
       resetForm();
+
+      closeModal(false);
 
       dispatch(getOptionList());
 
