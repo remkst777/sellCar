@@ -1,18 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import ModalDialog from 'components/ModalDialog';
 import { recoverPasswordUtil } from 'utils/accountManagement';
-import { hideModal } from 'utils/modal';
 
-import {
-  MODAL_DIALOG_FORGOT_PASSWORD_ID,
-  FORGOT_PASSWORD_FORM_EMAIL_FIELD,
-} from './constants';
+import { FORGOT_PASSWORD_FORM_EMAIL_FIELD } from './constants';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
 
 class ForgotPassword extends React.PureComponent {
   state = {
     loading: false,
+    modalVisible: false,
+  };
+
+  showModal = () => {
+    this.setState({ modalVisible: true });
+  };
+
+  hideModal = () => {
+    this.setState({ modalVisible: false });
   };
 
   submitForgotPassword = async (...args) => {
@@ -25,25 +32,36 @@ class ForgotPassword extends React.PureComponent {
     try {
       await recoverPasswordUtil(data);
       args[2].reset();
-      hideModal(MODAL_DIALOG_FORGOT_PASSWORD_ID);
+      this.hideModal();
     } catch (err) {
       console.log(err);
     }
 
-    this.setState({ loading: false });
+    this.setState({ loading: false, modalVisible: false });
   };
 
   render() {
+    const { children } = this.props;
+    const { loading, modalVisible } = this.state;
+
     return (
-      <ModalDialog id={MODAL_DIALOG_FORGOT_PASSWORD_ID}>
-        <ForgotPasswordForm
-          size="lg"
-          submitForgotPassword={this.submitForgotPassword}
-          loading={this.state.loading}
-        />
-      </ModalDialog>
+      <React.Fragment>
+        {children(this.showModal)}
+
+        <ModalDialog isActive={modalVisible} onClose={this.hideModal}>
+          <ForgotPasswordForm
+            size="lg"
+            submitForgotPassword={this.submitForgotPassword}
+            loading={loading}
+          />
+        </ModalDialog>
+      </React.Fragment>
     );
   }
 }
+
+ForgotPassword.propTypes = {
+  children: PropTypes.any,
+};
 
 export default ForgotPassword;

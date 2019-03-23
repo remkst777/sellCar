@@ -2,14 +2,14 @@ import { responseHandler } from 'utils/responseManagement';
 import { DEFAULT_HEADERS, METHODS } from './constants';
 
 export const getContentOfMyCartUtil = async () => {
-  const response = await fetch('/get_content_of_my_cart');
+  const response = await fetch('/api/get_content_of_my_cart');
   const responseJson = await response.json();
 
   return responseJson;
 };
 
 export const addToCartUtil = async id => {
-  const response = await fetch('/add_to_cart', {
+  const response = await fetch('/api/add_to_cart', {
     method: METHODS.POST,
     headers: DEFAULT_HEADERS,
     body: JSON.stringify({ id }),
@@ -21,7 +21,7 @@ export const addToCartUtil = async id => {
 };
 
 export const loginUtil = async data => {
-  const response = await fetch('/login', {
+  const response = await fetch('/api/login', {
     method: METHODS.POST,
     headers: DEFAULT_HEADERS,
     body: JSON.stringify({
@@ -36,12 +36,12 @@ export const loginUtil = async data => {
 };
 
 export const sendVerificationLetterUtil = async () => {
-  const response = await fetch('/send-verification-email');
+  const response = await fetch('/api/send-verification-email');
   await responseHandler(response);
 };
 
 export const logoutUtil = async () => {
-  const response = await fetch('/logout');
+  const response = await fetch('/api/logout');
   await responseHandler(response);
 };
 
@@ -56,7 +56,7 @@ export const confirmEmail = async url => {
 };
 
 export const getUserDataUtil = async () => {
-  const response = await fetch('/getuserdata');
+  const response = await fetch('/api/getuserdata');
   const responseJson = await response.json();
 
   if (response.status === 200) {
@@ -67,7 +67,7 @@ export const getUserDataUtil = async () => {
 };
 
 export const signupUtil = async data => {
-  const response = await fetch('/registr', {
+  const response = await fetch('/api/registr', {
     method: METHODS.POST,
     headers: DEFAULT_HEADERS,
     body: JSON.stringify({
@@ -81,7 +81,7 @@ export const signupUtil = async data => {
 };
 
 export const recoverPasswordUtil = async data => {
-  const response = await fetch('/recover-password', {
+  const response = await fetch('/api/recover-password', {
     method: METHODS.POST,
     headers: DEFAULT_HEADERS,
     body: JSON.stringify({
@@ -93,7 +93,7 @@ export const recoverPasswordUtil = async data => {
 };
 
 export const changePasswordUtil = async data => {
-  const response = await fetch('/change-password', {
+  const response = await fetch('/api/change-password', {
     method: METHODS.POST,
     headers: DEFAULT_HEADERS,
     body: JSON.stringify({

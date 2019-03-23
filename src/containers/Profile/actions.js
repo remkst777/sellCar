@@ -1,10 +1,7 @@
 import * as routes from 'routes-config';
 import { logoutUtil } from 'utils/accountManagement';
-import { showModal } from 'utils/modal';
 
 import { GET_USER_DATA_SUCCESS } from 'containers/AccountProvider/constants';
-import { MODAL_DIALOG_CHANGE_PASSWORD_ID } from 'components/ChangePassword/constants';
-
 import { LOGOUT, LOGOUT_SUCCESS, LOGOUT_ERROR } from './constants';
 
 export function logout(history) {
@@ -31,11 +28,5 @@ export function logout(history) {
         type: LOGOUT_ERROR,
       });
     }
-  };
-}
-
-export function showChangePasswordModal() {
-  return async () => {
-    showModal(MODAL_DIALOG_CHANGE_PASSWORD_ID);
   };
 }

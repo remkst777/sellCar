@@ -17,10 +17,7 @@ const HomePage = ({ match }) => {
 
   return (
     <div>
-      <Helmet>
-        <title>Home Page</title>
-        <meta name="description" content="Home Page | Description" />
-      </Helmet>
+      <Helmet title="Home Page" />
 
       <Box>
         <Item slide={0}>

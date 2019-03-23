@@ -3,18 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { showModal } from 'utils/modal';
 import { select as accountProviderSelect } from 'containers/AccountProvider/selectors';
 
 import HeaderView from './HeaderView';
 
-const showModalDispatch = e => {
-  showModal(e.target.dataset.modaltype);
-};
-
-const Header = ({ userData }) => (
-  <HeaderView userData={userData} showModal={showModalDispatch} />
-);
+const Header = ({ userData }) => <HeaderView userData={userData} />;
 
 Header.propTypes = {
   userData: PropTypes.object,

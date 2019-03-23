@@ -1,7 +1,10 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 const AboutUs = () => (
   <div className="container">
+    <Helmet title="About us" />
+
     <div className="py-2">
       <span className="text-warning">Technologies: </span>
       <span>React(16.8), NodeJS, MongoDB, IPFS</span>

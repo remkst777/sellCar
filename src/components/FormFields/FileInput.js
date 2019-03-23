@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import InputFiles from 'react-input-files';
 
 import Button from './Button';
@@ -12,5 +13,14 @@ const FileInput = ({ input, size, placeholder, className, meta, disabled }) => (
     </InputFiles>
   </div>
 );
+
+FileInput.propTypes = {
+  input: PropTypes.object,
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  size: PropTypes.string,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  meta: PropTypes.object,
+};
 
 export default React.memo(FileInput);

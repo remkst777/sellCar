@@ -26,7 +26,7 @@ class Image extends React.PureComponent {
   }
 
   fetch = async () => {
-    const fetcher = await fetch(`/images/${this.props.src}`);
+    const fetcher = await fetch(`/api/images/${this.props.src}`);
     const src = await fetcher.text();
 
     this.setState({ src });

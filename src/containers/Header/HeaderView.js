@@ -9,7 +9,7 @@ import HeaderStyled from './HeaderStyled';
 import HeaderNOTAuth from './HeaderNOTAuth';
 import HeaderAuth from './HeaderAuth';
 
-const HeaderView = ({ showModal, userData }) => (
+const HeaderView = ({ userData }) => (
   <HeaderStyled>
     <div className="container-fluid">
       <div className="row">
@@ -29,7 +29,7 @@ const HeaderView = ({ showModal, userData }) => (
               <Link to={routes.anotherCar}>Auto</Link>
             </li>
 
-            {!userData && <HeaderNOTAuth showModal={showModal} />}
+            {!userData && <HeaderNOTAuth />}
 
             {userData && (
               <HeaderAuth
@@ -45,7 +45,6 @@ const HeaderView = ({ showModal, userData }) => (
 );
 
 HeaderView.propTypes = {
-  showModal: PropTypes.func.isRequired,
   userData: PropTypes.object,
 };
 

@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { showModal } from 'utils/modal';
 
 import Button from 'components/FormFields/Button';
-import { MODAL_EDIT_FORM_ID } from './constants';
+import ModalDialog from 'components/ModalDialog';
+import CarForm from 'containers/CarForm';
 
-const openModalDialogToEdit = () => {
-  showModal(MODAL_EDIT_FORM_ID);
-};
+import { EDIT_CAR_FORM } from './constants';
 
-const AdminPanel = ({ userData, deleteCar }) => {
+const AdminPanel = ({
+  userData,
+  deleteCar,
+  updateCar,
+  updateCarLoading,
+  options,
+  car,
+  getCorrectListForSelect,
+  getManufacturerWithModelsList,
+  getOptionListLoading,
+}) => {
+  const [isActive, changeView] = useState(false);
+
   if (!userData || userData.role !== 'admin') {
     return null;
   }
@@ -17,12 +27,36 @@ const AdminPanel = ({ userData, deleteCar }) => {
   return (
     <div className="col-12 d-flex justify-content-end">
       <Button
-        onClick={openModalDialogToEdit}
         className="ml-2"
         size="sm"
         name="Edit"
+        onClick={() => changeView(true)}
       />
+
       <Button onClick={deleteCar} className="ml-2" size="sm" name="Delete" />
+
+      <ModalDialog isActive={isActive} onClose={() => changeView(false)}>
+        <CarForm
+          size="sm"
+          form={EDIT_CAR_FORM}
+          submitCar={updateCar}
+          submitCarLoading={updateCarLoading}
+          options={options}
+          imagesInitial={car.fotos}
+          brandInitial={getCorrectListForSelect([car.brand])[0]}
+          modelInitial={getCorrectListForSelect([car.model])[0]}
+          manufacturerInitial={getCorrectListForSelect([car.manufacturer])[0]}
+          colorInitial={getCorrectListForSelect([car.color])[0]}
+          bodyInitial={getCorrectListForSelect([car.body])[0]}
+          fuelInitial={getCorrectListForSelect([car.fuel])[0]}
+          yearInitial={car.year}
+          capacityInitial={car.capacity}
+          costInitial={car.cost}
+          descriptionInitial={car.description}
+          getManufacturerWithModelsList={getManufacturerWithModelsList}
+          getOptionListLoading={getOptionListLoading}
+        />
+      </ModalDialog>
     </div>
   );
 };
@@ -30,6 +64,13 @@ const AdminPanel = ({ userData, deleteCar }) => {
 AdminPanel.propTypes = {
   userData: PropTypes.object,
   deleteCar: PropTypes.func,
+  updateCar: PropTypes.func,
+  updateCarLoading: PropTypes.bool,
+  options: PropTypes.object,
+  car: PropTypes.object,
+  getCorrectListForSelect: PropTypes.func,
+  getManufacturerWithModelsList: PropTypes.func,
+  getOptionListLoading: PropTypes.bool,
 };
 
 export default React.memo(AdminPanel);

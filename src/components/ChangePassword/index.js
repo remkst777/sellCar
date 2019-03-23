@@ -1,10 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ModalDialog from 'components/ModalDialog';
 import { changePasswordUtil } from 'utils/accountManagement';
-import { hideModal } from 'utils/modal';
 
 import {
-  MODAL_DIALOG_CHANGE_PASSWORD_ID,
   CHANGE_PASSWORD_FORM_EMAIL_FIELD,
   CHANGE_PASSWORD_FORM_PASSWORD_FIELD,
   CHANGE_PASSWORD_FORM_PASSWORD2_FIELD,
@@ -15,6 +14,15 @@ import ChangePasswordForm from './ChangePasswordForm';
 class ChangePassword extends React.PureComponent {
   state = {
     loading: false,
+    modalVisible: false,
+  };
+
+  showModal = () => {
+    this.setState({ modalVisible: true });
+  };
+
+  hideModal = () => {
+    this.setState({ modalVisible: false });
   };
 
   submitChangePassword = async (...args) => {
@@ -29,25 +37,36 @@ class ChangePassword extends React.PureComponent {
     try {
       await changePasswordUtil(data);
       args[2].reset();
-      hideModal(MODAL_DIALOG_CHANGE_PASSWORD_ID);
+      this.hideModal();
     } catch (err) {
       console.log(err);
     }
 
-    this.setState({ loading: false });
+    this.setState({ loading: false, modalVisible: false });
   };
 
   render() {
+    const { children } = this.props;
+    const { loading, modalVisible } = this.state;
+
     return (
-      <ModalDialog id={MODAL_DIALOG_CHANGE_PASSWORD_ID}>
-        <ChangePasswordForm
-          size="lg"
-          submitChangePassword={this.submitChangePassword}
-          loading={this.state.loading}
-        />
-      </ModalDialog>
+      <React.Fragment>
+        {children(this.showModal)}
+
+        <ModalDialog isActive={modalVisible} onClose={this.hideModal}>
+          <ChangePasswordForm
+            size="lg"
+            submitChangePassword={this.submitChangePassword}
+            loading={loading}
+          />
+        </ModalDialog>
+      </React.Fragment>
     );
   }
 }
+
+ChangePassword.propTypes = {
+  children: PropTypes.any,
+};
 
 export default ChangePassword;

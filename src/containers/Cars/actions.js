@@ -11,8 +11,6 @@ import {
   getRangeValuesUtil,
 } from 'utils/autoManagement';
 
-import { hideAllActiveModals } from 'utils/modal';
-
 import { putToCache } from 'containers/DataCacheProvider/actions';
 
 import {
@@ -173,7 +171,6 @@ export function addCar(val, resetForm) {
       });
 
       resetForm();
-      hideAllActiveModals();
 
       dispatch(getOptionList());
 

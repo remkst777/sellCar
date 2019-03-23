@@ -6,13 +6,9 @@ import { blue } from 'style-constants';
 import { getCorrectListForSelect } from 'utils/autoManagement';
 
 import Slider from 'components/Slider';
-import ModalDialog from 'components/ModalDialog';
-import CarForm from 'containers/CarForm';
-
 import AddToCartButton from 'containers/AddToCartButton';
 
 import AdminPanel from './AdminPanel';
-import { MODAL_EDIT_FORM_ID, EDIT_CAR_FORM } from './constants';
 
 const Li = styled.li`
   text-transform: capitalize;
@@ -30,7 +26,6 @@ const Key = styled.span`
 const SingleCarView = ({
   car,
   userData,
-  updateCarLoading,
   updateCar,
   options,
   getManufacturerWithModelsList,
@@ -38,7 +33,17 @@ const SingleCarView = ({
   deleteCar,
 }) => (
   <div className="row">
-    <AdminPanel userData={userData} deleteCar={deleteCar} />
+    <AdminPanel
+      userData={userData}
+      deleteCar={deleteCar}
+      updateCar={updateCar}
+      updateCarLoading={updateCar}
+      options={options}
+      car={car}
+      getCorrectListForSelect={getCorrectListForSelect}
+      getManufacturerWithModelsList={getManufacturerWithModelsList}
+      getOptionListLoading={getOptionListLoading}
+    />
 
     <div className="col-12 col-xl-6 d-flex justify-content-center">
       <Slider fotos={car.fotos} size="400px" />
@@ -101,29 +106,6 @@ const SingleCarView = ({
         </Li>
       </ul>
     </div>
-
-    <ModalDialog id={MODAL_EDIT_FORM_ID}>
-      <CarForm
-        size="sm"
-        form={EDIT_CAR_FORM}
-        submitCar={updateCar}
-        submitCarLoading={updateCarLoading}
-        options={options}
-        imagesInitial={car.fotos}
-        brandInitial={getCorrectListForSelect([car.brand])[0]}
-        modelInitial={getCorrectListForSelect([car.model])[0]}
-        manufacturerInitial={getCorrectListForSelect([car.manufacturer])[0]}
-        colorInitial={getCorrectListForSelect([car.color])[0]}
-        bodyInitial={getCorrectListForSelect([car.body])[0]}
-        fuelInitial={getCorrectListForSelect([car.fuel])[0]}
-        yearInitial={car.year}
-        capacityInitial={car.capacity}
-        costInitial={car.cost}
-        descriptionInitial={car.description}
-        getManufacturerWithModelsList={getManufacturerWithModelsList}
-        getOptionListLoading={getOptionListLoading}
-      />
-    </ModalDialog>
   </div>
 );
 

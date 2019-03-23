@@ -17,6 +17,23 @@ body {
   background-image: linear-gradient(180deg, #0b0a30, #283470);
 }
 
+#root {
+  position: relative;
+  z-index: 200;
+}
+
+#modal > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 300;
+}
+
 a:active,
 a:visited,
 a:hover {

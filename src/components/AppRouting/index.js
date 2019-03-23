@@ -4,14 +4,10 @@ import * as routes from 'routes-config';
 
 import Cart from 'containers/Cart';
 import Cars from 'containers/Cars';
-import Login from 'containers/Login';
 import Header from 'containers/Header';
 import Profile from 'containers/Profile';
 import SingleCar from 'containers/SingleCar';
 
-import SignUp from 'components/SignUp';
-import ForgotPassword from 'components/ForgotPassword';
-import ChangePassword from 'components/ChangePassword';
 import NotFoundPage from 'components/NotFoundPage';
 import HomePage from 'components/HomePage';
 import AboutUs from 'components/AboutUs';
@@ -63,11 +59,6 @@ const AppRouting = () => (
         <Route path={routes.cart} render={props => Wrapper(Cart, props)} />
         <Route render={props => Wrapper(NotFoundPage, props)} />
       </Switch>
-
-      <Login />
-      <SignUp />
-      <ForgotPassword />
-      <ChangePassword />
     </div>
   </BrowserRouter>
 );

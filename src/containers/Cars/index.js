@@ -12,7 +12,6 @@ import {
   selectToString,
 } from 'utils/autoManagement';
 
-import { showModal } from 'utils/modal';
 import * as routes from 'routes-config';
 
 import { select as accountProviderSelect } from 'containers/AccountProvider/selectors';
@@ -38,7 +37,6 @@ import {
   COLOR_FIELD,
   BODY_FIELD,
   FUEL_FIELD,
-  ADD_AUTO_MODAL_ID,
   FILTER_CARS_FORM,
   ADD_CAR_FORM,
   MIN_YEAR_FILTER_FIELD,
@@ -151,9 +149,6 @@ class Cars extends React.PureComponent {
     // clear forms
     this.props.resetFormDispatch(ADD_CAR_FORM);
     this.props.resetFormDispatch(FILTER_CARS_FORM);
-
-    // open modal
-    showModal(ADD_AUTO_MODAL_ID);
   };
 
   render() {
@@ -172,15 +167,18 @@ class Cars extends React.PureComponent {
 
     return (
       <div className="container">
-        <Helmet>
-          <title>Cars</title>
-          <meta name="description" content="Cars | Description" />
-        </Helmet>
+        <Helmet title="Cars" />
 
         <CarsHeader
           showAddAutoModal={this.showAddAutoModal}
           userData={userData}
+          addCar={this.addCar}
+          addCarLoading={addCarLoading}
+          options={options}
+          getManufacturerWithModelsList={getManufacturerWithModelsListDispatch}
+          getOptionListLoading={getOptionListLoading}
         />
+
         <CarsView
           sort={sort}
           ranges={ranges}

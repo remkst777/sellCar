@@ -10,20 +10,19 @@ import Label from './Label';
 import { properties } from './Element';
 
 const SelectField = ({
-  input = {},
   label,
   options,
   isMulti,
-  isClearable,
+  isCreatable,
   isSearchable,
   disabled,
   defaultValue,
   meta,
   size,
-  isCreatable,
   className,
   placeholder,
   allOption,
+  input = {},
 }) => {
   const Select = isCreatable ? Creatable : NotCreatable;
 
@@ -35,7 +34,7 @@ const SelectField = ({
         inputId={`${input.name}_${Math.random()}`}
         onBlur={() => input.onBlur && input.onBlur(input.value)}
         isMulti={isMulti}
-        isClearable={isClearable}
+        isCreatable={isCreatable}
         isSearchable={isSearchable}
         isDisabled={disabled}
         placeholder={placeholder}
@@ -95,9 +94,13 @@ SelectField.propTypes = {
   meta: PropTypes.object,
   label: PropTypes.string,
   isMulti: PropTypes.bool,
-  isClearable: PropTypes.bool,
+  isCreatable: PropTypes.bool,
   isSearchable: PropTypes.bool,
   disabled: PropTypes.bool,
+  className: PropTypes.string,
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  allOption: PropTypes.bool,
+  size: PropTypes.string,
 };
 
 export default React.memo(SelectField);

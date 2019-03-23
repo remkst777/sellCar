@@ -34,6 +34,9 @@ const MyCart = React.memo(
 
 MyCart.propTypes = {
   cart: PropTypes.array,
+  cartLoading: PropTypes.bool,
+  cartItems: PropTypes.array,
+  cartItemsLoading: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({

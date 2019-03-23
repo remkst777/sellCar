@@ -62,10 +62,7 @@ class SingleCar extends React.PureComponent {
 
     return (
       <div className="container">
-        <Helmet>
-          <title>{title}</title>
-          <meta name="description" content="Cars | Description" />
-        </Helmet>
+        <Helmet title={title} />
 
         {!carLoading && car && (
           <SingleCarView

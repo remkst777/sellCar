@@ -10,7 +10,7 @@ import { select as accountProviderSelect } from 'containers/AccountProvider/sele
 import { showToast } from 'utils/toasts';
 
 import { select as profileSelect } from './selectors';
-import { showChangePasswordModal, logout } from './actions';
+import { logout } from './actions';
 import ProfileView from './ProfileView';
 
 class Profile extends React.PureComponent {
@@ -31,25 +31,14 @@ class Profile extends React.PureComponent {
   };
 
   render() {
-    const {
-      userData,
-      loadingLogout,
-      showChangePasswordModalDispatch,
-    } = this.props;
+    const { userData, loadingLogout } = this.props;
 
     return (
       <div className="container">
-        <Helmet>
-          <title>Profile</title>
-          <meta name="description" content="Profile | Description" />
-        </Helmet>
+        <Helmet title="Profile" />
 
         {userData && (
-          <ProfileView
-            logout={this.logout}
-            loadingLogout={loadingLogout}
-            showChangePasswordModal={showChangePasswordModalDispatch}
-          />
+          <ProfileView logout={this.logout} loadingLogout={loadingLogout} />
         )}
       </div>
     );
@@ -62,7 +51,6 @@ Profile.propTypes = {
   userDataLoading: PropTypes.bool.isRequired,
   loadingLogout: PropTypes.bool.isRequired,
   logoutDispatch: PropTypes.func.isRequired,
-  showChangePasswordModalDispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -73,10 +61,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   logoutDispatch: bindActionCreators(logout, dispatch),
-  showChangePasswordModalDispatch: bindActionCreators(
-    showChangePasswordModal,
-    dispatch,
-  ),
 });
 
 export default connect(

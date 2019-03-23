@@ -1,10 +1,7 @@
 import { loginUtil, sendVerificationLetterUtil } from 'utils/accountManagement';
-import { hideModal, showModal, hideAllActiveModals } from 'utils/modal';
 
 import { getUserData } from 'containers/AccountProvider/actions';
-
 import { GET_USER_DATA_SUCCESS } from 'containers/AccountProvider/constants';
-import { MODAL_DIALOG_FORGOT_PASSWORD_ID } from 'components/ForgotPassword/constants';
 
 import {
   LOGIN,
@@ -13,10 +10,9 @@ import {
   SEND_VERIFICATION_LETTER,
   SEND_VERIFICATION_LETTER_SUCCESS,
   SEND_VERIFICATION_LETTER_ERROR,
-  MODAL_DIALOG_LOGIN_ID,
 } from './constants';
 
-export function login(data) {
+export function login(data, hideModal) {
   return async dispatch => {
     try {
       dispatch({
@@ -31,12 +27,12 @@ export function login(data) {
         type: LOGIN_SUCCESS,
       });
 
+      await hideModal();
+
       dispatch({
         type: GET_USER_DATA_SUCCESS,
         userData,
       });
-
-      hideModal(MODAL_DIALOG_LOGIN_ID);
     } catch (err) {
       dispatch({
         type: LOGIN_ERROR,
@@ -62,12 +58,5 @@ export function sendVerificationLetter() {
         type: SEND_VERIFICATION_LETTER_ERROR,
       });
     }
-  };
-}
-
-export function showForgotPasswordModal() {
-  return async () => {
-    hideAllActiveModals();
-    showModal(MODAL_DIALOG_FORGOT_PASSWORD_ID);
   };
 }

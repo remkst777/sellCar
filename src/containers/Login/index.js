@@ -4,86 +4,85 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { blue } from 'style-constants';
 
 import ModalDialog from 'components/ModalDialog';
+import ForgotPassword from 'components/ForgotPassword';
 
 import LoginForm from './LoginForm';
 import { select } from './selectors';
 
-import {
-  login,
-  sendVerificationLetter,
-  showForgotPasswordModal,
-} from './actions';
+import { login } from './actions';
 
-import {
-  MODAL_DIALOG_LOGIN_ID,
-  LOGIN_FORM_EMAIL_FIELD,
-  LOGIN_FORM_PASSWORD_FIELD,
-} from './constants';
+import { LOGIN_FORM_EMAIL_FIELD, LOGIN_FORM_PASSWORD_FIELD } from './constants';
 
-const Badge = styled.span`
+const Badge = styled.div`
   cursor: pointer;
   letter-spacing: -0.7px;
+  color: ${blue};
 `;
 
 class Login extends React.PureComponent {
+  state = {
+    modalVisible: false,
+  };
+
+  showModal = () => {
+    this.setState({ modalVisible: true });
+  };
+
+  hideModal = () => {
+    this.setState({ modalVisible: false });
+  };
+
   submitLogin = val => {
     const email = val[LOGIN_FORM_EMAIL_FIELD];
     const password = val[LOGIN_FORM_PASSWORD_FIELD];
 
-    this.props.loginDispatch({
-      email,
-      password,
-    });
-  };
-
-  sendVerificationLetter = () => {
-    this.props.sendVerificationLetterDispatch();
-  };
-
-  showForgotPasswordModal = () => {
-    this.props.showForgotPasswordModalDispatch();
+    this.props.loginDispatch(
+      {
+        email,
+        password,
+      },
+      this.hideModal,
+    );
   };
 
   render() {
-    const { loading } = this.props;
+    const { loading, element } = this.props;
 
     return (
-      <ModalDialog id={MODAL_DIALOG_LOGIN_ID}>
-        <div>
-          <LoginForm
-            size="lg"
-            submitLogin={this.submitLogin}
-            loading={loading}
-          />
-          <div className="pt-4">
-            <Badge
-              onClick={this.sendVerificationLetter}
-              className="text-primary"
-            >
-              Send verification letter?
-            </Badge>
+      <React.Fragment>
+        {React.createElement(element, { onClick: this.showModal }, 'Login')}
+
+        <ModalDialog
+          isActive={this.state.modalVisible}
+          onClose={this.hideModal}
+        >
+          <div>
+            <LoginForm
+              size="lg"
+              submitLogin={this.submitLogin}
+              loading={loading}
+            />
+            <ForgotPassword>
+              {onClick => (
+                <Badge onClick={onClick} className="pt-3">
+                  Forgot password?
+                </Badge>
+              )}
+            </ForgotPassword>
           </div>
-          <div className="pt-3">
-            <Badge
-              onClick={this.showForgotPasswordModal}
-              className="text-primary"
-            >
-              Forgot password?
-            </Badge>
-          </div>
-        </div>
-      </ModalDialog>
+        </ModalDialog>
+      </React.Fragment>
     );
   }
 }
 
 Login.propTypes = {
+  element: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   loginDispatch: PropTypes.func.isRequired,
-  showForgotPasswordModalDispatch: PropTypes.func.isRequired,
-  sendVerificationLetterDispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -92,14 +91,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   loginDispatch: bindActionCreators(login, dispatch),
-  showForgotPasswordModalDispatch: bindActionCreators(
-    showForgotPasswordModal,
-    dispatch,
-  ),
-  sendVerificationLetterDispatch: bindActionCreators(
-    sendVerificationLetter,
-    dispatch,
-  ),
 });
 
 export default connect(

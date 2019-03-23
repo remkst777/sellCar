@@ -35,6 +35,7 @@ Button.propTypes = {
   name: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
+  dataset: PropTypes.object,
 };
 
 export default React.memo(Button);

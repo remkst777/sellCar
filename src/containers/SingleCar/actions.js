@@ -1,5 +1,3 @@
-import { hideAllActiveModals } from 'utils/modal';
-
 import {
   saveArrayOfImages,
   updateAutoUtil,
@@ -113,7 +111,6 @@ export function updateCar(val, resetForm, carId) {
       dispatch(putToCache('cars', [car]));
 
       resetForm();
-      hideAllActiveModals();
 
       dispatch(getOptionList());
 
