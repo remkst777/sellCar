@@ -12,10 +12,11 @@ import Loader from 'components/Loader';
 import { select as accountProviderSelect } from 'containers/AccountProvider/selectors';
 import { select as selectFromCarsContainer } from 'containers/Cars/selectors';
 import { getManufacturerWithModelsList } from 'containers/Cars/actions';
+
 import { select } from './selectors';
 import { getCarById, updateCar, deleteCar } from './actions';
 
-import SingleCarView from './SingleCarView';
+import SingleCarView from './components/SingleCarView';
 
 /* eslint no-underscore-dangle: 0 */
 class SingleCar extends React.PureComponent {

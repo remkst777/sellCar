@@ -9,7 +9,7 @@ import { blue } from 'style-constants';
 import ModalDialog from 'components/ModalDialog';
 import ForgotPassword from 'components/ForgotPassword';
 
-import LoginForm from './LoginForm';
+import LoginForm from './components/LoginForm';
 import { select } from './selectors';
 
 import { login } from './actions';

@@ -11,7 +11,10 @@ import {
 import Input from 'components/FormFields/Input';
 import Button from 'components/FormFields/Button';
 
-import { LOGIN_FORM_EMAIL_FIELD, LOGIN_FORM_PASSWORD_FIELD } from './constants';
+import {
+  LOGIN_FORM_EMAIL_FIELD,
+  LOGIN_FORM_PASSWORD_FIELD,
+} from '../constants';
 
 const LoginForm = ({ loading, handleSubmit, submitLogin, size }) => (
   <div>

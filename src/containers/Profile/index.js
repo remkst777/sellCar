@@ -11,7 +11,7 @@ import { showToast } from 'utils/toasts';
 
 import { select as profileSelect } from './selectors';
 import { logout } from './actions';
-import ProfileView from './ProfileView';
+import ProfileView from './components/ProfileView';
 
 class Profile extends React.PureComponent {
   componentDidUpdate() {

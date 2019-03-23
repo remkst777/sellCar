@@ -12,7 +12,7 @@ import {
 
 import { select } from './selectors';
 
-import ListOfItems from './ListOfItems';
+import ListOfItems from './components/ListOfItems';
 
 const MyCart = React.memo(
   ({ cart, cartLoading, cartItems, cartItemsLoading }) => (

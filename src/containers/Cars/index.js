@@ -27,8 +27,8 @@ import {
 
 import { select } from './selectors';
 
-import CarsHeader from './CarsHeader';
-import CarsView from './CarsView';
+import CarsHeader from './components/CarsHeader';
+import CarsView from './components/CarsView';
 
 import {
   BRAND_FIELD,

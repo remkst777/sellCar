@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { addToCartAction } from 'containers/AccountProvider/actions';
 import { selectCart } from 'containers/AccountProvider/selectors';
 
-import Cart from './Cart';
+import Cart from './components/Cart';
 
 /* eslint no-use-before-define: 0 */
 const AddToCartButton = React.memo(

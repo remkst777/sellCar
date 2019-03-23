@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { select as accountProviderSelect } from 'containers/AccountProvider/selectors';
 
-import HeaderView from './HeaderView';
+import HeaderView from './components/HeaderView';
 
 const Header = ({ userData }) => <HeaderView userData={userData} />;
 

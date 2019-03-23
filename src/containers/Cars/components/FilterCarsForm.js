@@ -21,7 +21,7 @@ import {
   MIN_COST_FILTER_FIELD,
   MAX_COST_FILTER_FIELD,
   FILTER_CARS_FORM,
-} from './constants';
+} from '../constants';
 
 /* eslint import/no-mutable-exports: 0 */
 let FilterCarsForm = ({

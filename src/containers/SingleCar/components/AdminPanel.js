@@ -7,7 +7,7 @@ import Button from 'components/FormFields/Button';
 import ModalDialog from 'components/ModalDialog';
 import CarForm from 'containers/CarForm';
 
-import { EDIT_CAR_FORM } from './constants';
+import { EDIT_CAR_FORM } from '../constants';
 
 const AdminPanel = ({
   userData,

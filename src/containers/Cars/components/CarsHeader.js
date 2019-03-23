@@ -5,7 +5,7 @@ import Button from 'components/FormFields/Button';
 import ModalDialog from 'components/ModalDialog';
 import CarForm from 'containers/CarForm';
 
-import { ADD_CAR_FORM } from './constants';
+import { ADD_CAR_FORM } from '../constants';
 
 const ProductsHeader = ({
   showAddAutoModal,
