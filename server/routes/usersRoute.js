@@ -11,9 +11,6 @@ const {
   MESSAGES,
   USERS_MODEL_FIELDS,
   SALT_PARAM_1,
-  MAIL_SERVICE,
-  MAIL_SERVICE_USER,
-  MAIL_SERVICE_PASSWORD,
   APP_ADMINS,
   USER_ROLES,
   MAX_CART_LENGTH,
@@ -21,15 +18,15 @@ const {
 
 const sendEmail = (req, res, email, message) => {
   const transporter = nodemailer.createTransport({
-    service: MAIL_SERVICE,
+    service: process.env.MAIL_SERVICE,
     auth: {
-      user: MAIL_SERVICE_USER,
-      pass: MAIL_SERVICE_PASSWORD,
+      user: process.env.MAIL_SERVICE_USER,
+      pass: process.env.MAIL_SERVICE_PASSWORD,
     },
   });
 
   transporter.sendMail({
-    from: MAIL_SERVICE,
+    from: process.env.MAIL_SERVICE,
     to: email,
     subject: message.subject,
     html: message.html,

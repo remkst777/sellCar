@@ -1,8 +1,6 @@
 const PORT = 5000;
-const DB_CONNECTION =
-  'mongodb+srv://roman:!!!rem123@cluster0-t3gpa.mongodb.net/xccxxc?retryWrites=true';
 
-const APP_ADMINS = ['remkst777@rambler.ru'];
+const APP_ADMINS = [process.env.APP_ADMIN_1];
 
 const MESSAGES = {
   FIELD_VALIDATION_FAILED: 'Field validation is failed',
@@ -56,9 +54,6 @@ const USER_ROLES = {
 };
 
 const SALT_PARAM_1 = 10;
-const MAIL_SERVICE = 'Gmail';
-const MAIL_SERVICE_USER = 'romanrem888@gmail.com';
-const MAIL_SERVICE_PASSWORD = '!!!qqq123';
 
 const MAX_CART_LENGTH = 15;
 
@@ -67,7 +62,6 @@ const MAX_IMAGE_SIZE = 1000000; // 1Mb
 
 module.exports = {
   PORT,
-  DB_CONNECTION,
   MESSAGES,
   AUTO_MODEL_FIELDS,
   USERS_MODEL_FIELDS,
@@ -75,9 +69,6 @@ module.exports = {
   USER_ROLES,
   APP_ADMINS,
   MAX_CART_LENGTH,
-  MAIL_SERVICE,
-  MAIL_SERVICE_USER,
-  MAIL_SERVICE_PASSWORD,
   PUBLIC_IMAGES,
   MAX_IMAGE_SIZE,
 };

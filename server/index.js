@@ -6,14 +6,16 @@ const session = require('express-session');
 const passport = require('passport');
 const rateLimit = require('express-rate-limit');
 
+require('dotenv').config();
+
 // Routing
 const UsersRoute = require('./routes/usersRoute');
 const AutoRoute = require('./routes/autoRoute');
 
-const { PORT, DB_CONNECTION } = require('./constants');
+const { PORT } = require('./constants');
 
 mongoose.connect(
-  DB_CONNECTION,
+  process.env.DB_CONNECTION,
   { useNewUrlParser: true },
 );
 
@@ -80,4 +82,4 @@ app.use(UsersRoute);
 app.use(AutoRoute);
 
 // Start Server
-app.listen(PORT);
+app.listen(process.env.PORT || PORT);
